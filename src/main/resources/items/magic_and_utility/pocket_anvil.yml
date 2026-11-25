@@ -1,0 +1,19 @@
+# Utilidad · Yunque de Bolsillo con coste de experiencia.
+id: pocket_anvil
+material: ANVIL
+name: "<gradient:#FB923C:#F97316><b>Yunque de Bolsillo</b></gradient>"
+lore:
+  - "<#FB923C>Clic derecho</#FB923C> <dark_gray>»</dark_gray> <white>abrir yunque"
+  - "<#FB923C>Shift + clic</#FB923C> <dark_gray>»</dark_gray> <white>abrir piedra de afilar"
+max-stack: 1
+activators:
+  anvil:
+    type: RIGHT_CLICK
+    click: AIR
+    actions:
+      - "OPEN: anvil"
+  grind:
+    type: SHIFT_RIGHT_CLICK
+    click: AIR
+    actions:
+      - "OPEN: grindstone"

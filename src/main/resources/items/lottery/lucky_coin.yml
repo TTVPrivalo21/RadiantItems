@@ -1,0 +1,20 @@
+# Lotería · Moneda de la Suerte: cara o cruz con chance 50%.
+id: lucky_coin
+material: GOLD_NUGGET
+name: "<gradient:#FB923C:#F97316><b>Moneda de la Suerte</b></gradient>"
+lore:
+  - "<#FB923C>Clic derecho</#FB923C> <dark_gray>»</dark_gray> <white>lanzar (50%)"
+  - "<white>Aciertos: <#F97316>%wins%"
+glow: true
+variables: { wins: 0 }
+activators:
+  flip:
+    type: RIGHT_CLICK
+    cooldown: 5
+    chance: 50
+    actions:
+      - "VARIABLE: wins + 1"
+      - "EFFECT: LUCK 600 0"
+      - "ACTIONBAR: <#F97316>¡Cara! <white>Suerte durante 30s"
+    messages:
+      chance-failed: "<gray>Cruz... inténtalo en 5 segundos."

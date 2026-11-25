@@ -1,0 +1,19 @@
+# Lotería · Llave Común: úsala sobre un cofre o barril para abrir una caja (LOOT ponderado).
+id: common_crate_key
+material: TRIPWIRE_HOOK
+name: "<gradient:#FB923C:#F97316><b>Llave de Caja Común</b></gradient>"
+lore:
+  - "<#FB923C>Clic derecho en un cofre</#FB923C> <dark_gray>»</dark_gray> <white>abrir caja"
+  - "<dark_gray>60% hierro · 30% oro · 10% diamante"
+glow: true
+activators:
+  open:
+    type: RIGHT_CLICK
+    click: BLOCK
+    consume-item: true
+    conditions:
+      - "BLOCK_TYPE: CHEST,BARREL,TRAPPED_CHEST | <#F97316>Usa la llave sobre un cofre o barril."
+    actions:
+      - "LOOT: 60=GIVE_ITEM: IRON_INGOT 8 && MESSAGE: <white>Caja común: <#FB923C>8 hierro ;; 30=GIVE_ITEM: GOLD_INGOT 6 && MESSAGE: <white>Caja común: <#FB923C>6 oro ;; 10=GIVE_ITEM: DIAMOND 2 && MESSAGE: <white>Caja común: <#F97316>¡2 diamantes!"
+      - "@block PARTICLE: FIREWORK 25 0.4 0.1"
+      - "SOUND: block.chest.open 1 1.2"

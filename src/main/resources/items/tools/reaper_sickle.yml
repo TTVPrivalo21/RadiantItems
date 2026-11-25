@@ -1,0 +1,14 @@
+# Herramientas · Hoz del Segador: cosecha automática al romper un cultivo.
+id: reaper_sickle
+material: IRON_HOE
+name: "<gradient:#FB923C:#F97316><b>Hoz del Segador</b></gradient>"
+lore:
+  - "<white>Al romper un cultivo cosecha todo"
+  - "<white>lo maduro a su alrededor."
+activators:
+  reap:
+    type: BLOCK_BREAK
+    conditions:
+      - "BLOCK_TYPE: WHEAT,CARROTS,POTATOES,BEETROOTS,NETHER_WART"
+    actions:
+      - "HARVEST: 4"

@@ -1,0 +1,17 @@
+# Consumibles · Elixir de Vida: curación inmediata y regeneración.
+id: life_elixir
+material: POTION
+name: "<gradient:#FB923C:#F97316><b>Elixir de Vida</b></gradient>"
+color: "#ff5b5b"
+lore:
+  - "<white>Restaura 8 corazones y regenera."
+flags: [HIDE_ADDITIONAL_TOOLTIP]
+activators:
+  drink:
+    type: CONSUME
+    consume-item: true
+    actions:
+      - "HEAL: 16"
+      - "EFFECT: REGENERATION 200 1"
+      - "PARTICLE: HEART 8 0.5 0"
+      - "SOUND: entity.generic.drink 1 1.1"

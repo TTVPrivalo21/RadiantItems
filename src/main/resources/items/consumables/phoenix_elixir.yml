@@ -1,0 +1,31 @@
+# Consumibles · Elixir del Fénix: 3 tragos, color de poción y coste en niveles.
+id: phoenix_elixir
+material: POTION
+name: "<gradient:#FB923C:#F97316><b>Elixir del Fénix</b></gradient>"
+lore:
+  - "<white>Cura, alimenta y protege del fuego."
+  - "<white>Tragos: <#F97316>%uses%</#F97316>/%max_uses%"
+  - "<dark_gray>Cada trago cuesta 2 niveles."
+texture: phoenix_elixir
+model: generated
+color: "#F97316"
+glow: true
+flags: [HIDE_ADDITIONAL_TOOLTIP]
+max-uses: 3
+activators:
+  drink:
+    type: CONSUME
+    consume-usage: 1
+    cooldown: 10
+    conditions:
+      - "XP_COST: 2"
+    actions:
+      - "HEAL: 10"
+      - "FEED: 8 6"
+      - "EFFECT: FIRE_RESISTANCE 600 0"
+      - "EFFECT: ABSORPTION 400 1"
+      - "EXTINGUISH"
+      - "PARTICLE: FLAME 40 0.5 0.05"
+      - "SOUND: entity.blaze.ambient 0.6 1.5"
+    messages:
+      success: "<#F97316>🔥 El fuego del fénix te renueva."

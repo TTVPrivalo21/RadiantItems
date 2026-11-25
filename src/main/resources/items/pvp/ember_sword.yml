@@ -1,0 +1,19 @@
+# PvP · Espada de Brasas: quema salvo bajo el agua.
+id: ember_sword
+material: NETHERITE_SWORD
+name: "<gradient:#FB923C:#F97316><b>Espada de Brasas</b></gradient>"
+lore:
+  - "<white>Prende fuego a sus víctimas."
+  - "<white>Dentro del agua pierde su poder."
+glow: true
+enchantments: { fire_aspect: 1 }
+flags: [HIDE_ENCHANTS]
+activators:
+  burn:
+    type: HIT_ENTITY
+    conditions:
+      - "!IN_WATER"
+    actions:
+      - "@target IGNITE: 80"
+      - "@target PARTICLE: FLAME 20 0.3 0.05"
+      - "SOUND: entity.blaze.shoot 0.4 1.6"

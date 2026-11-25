@@ -1,0 +1,14 @@
+# Lotería · Bolsa de Tesoro aleatoria.
+id: treasure_bag
+material: RABBIT_HIDE
+name: "<gradient:#FB923C:#F97316><b>Bolsa de Tesoro</b></gradient>"
+lore:
+  - "<#FB923C>Clic derecho</#FB923C> <dark_gray>»</dark_gray> <white>abrir la bolsa"
+activators:
+  open:
+    type: RIGHT_CLICK
+    consume-item: true
+    actions:
+      - "LOOT: 30=GIVE_ITEM: COOKED_BEEF 16 ;; 25=GIVE_ITEM: ARROW 32 ;; 20=GIVE_ITEM: IRON_INGOT 10 ;; 15=GIVE_XP: 5 L ;; 10=GIVE_ITEM: ri:life_elixir 1"
+      - "PARTICLE: HAPPY_VILLAGER 15 0.4 0"
+      - "SOUND: entity.item.pickup 1 0.8"

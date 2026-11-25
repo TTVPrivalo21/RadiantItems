@@ -1,0 +1,18 @@
+# Lotería · Ruleta de Ítems: premios de RadiantItems.
+id: item_roulette
+material: CLOCK
+name: "<gradient:#FB923C:#F97316><b>Ruleta de Ítems</b></gradient>"
+lore:
+  - "<white>Gira para ganar un ítem especial."
+  - "<dark_gray>Cuesta 3 niveles."
+activators:
+  spin:
+    type: RIGHT_CLICK
+    cooldown: 30
+    conditions:
+      - "XP_COST: 3"
+    actions:
+      - "PARTICLE_SPIRAL: FIREWORK 0.7 2"
+      - "DELAY: 20"
+      - "LOOT: 25=GIVE_ITEM: ri:golden_cookie 3 ;; 25=GIVE_ITEM: ri:spawn_scroll 1 ;; 20=GIVE_ITEM: ri:life_elixir 1 ;; 15=GIVE_ITEM: ri:party_popper 2 ;; 10=GIVE_ITEM: ri:mystic_apple 1 ;; 5=GIVE_ITEM: ri:eternal_pearl 1"
+      - "SOUND: entity.player.levelup 1 1.2"

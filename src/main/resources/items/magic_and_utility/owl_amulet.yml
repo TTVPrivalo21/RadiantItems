@@ -1,0 +1,20 @@
+# Magia · Amuleto del Búho: visión nocturna en la mano secundaria.
+id: owl_amulet
+material: ENDER_EYE
+name: "<gradient:#FB923C:#F97316><b>Amuleto del Búho</b></gradient>"
+lore:
+  - "<white>En la mano secundaria: visión nocturna."
+glow: true
+max-stack: 1
+activators:
+  sight:
+    type: HOLD_LOOP
+    slot: OFF_HAND
+    interval: 100
+    actions:
+      - "EFFECT: NIGHT_VISION 300 0 hide"
+  off:
+    type: UNEQUIP
+    slot: OFF_HAND
+    actions:
+      - "REMOVE_EFFECT: NIGHT_VISION"

@@ -1,0 +1,22 @@
+# Diversión · Pelota Saltarina: lanza por los aires a quien golpea.
+id: bounce_ball
+material: SLIME_BALL
+name: "<gradient:#FB923C:#F97316><b>Pelota Saltarina</b></gradient>"
+lore:
+  - "<#FB923C>Clic derecho</#FB923C> <dark_gray>»</dark_gray> <white>lánzala"
+  - "<white>Rebota a quien toca hacia arriba."
+max-stack: 1
+activators:
+  throw:
+    type: RIGHT_CLICK
+    cooldown: 1
+    cooldown-message: false
+    actions:
+      - "PROJECTILE: SNOWBALL 1.2"
+      - "SOUND: entity.slime.jump 1 1.2"
+  bounce:
+    type: PROJECTILE_HIT
+    actions:
+      - "@target VELOCITY: 0 1.1 0"
+      - "@block PARTICLE: ITEM_SLIME 12 0.3 0.1"
+      - "@block SOUND: entity.slime.squish 1 1"

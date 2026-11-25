@@ -1,0 +1,19 @@
+# PvP · Escudo de Espinas: repele y envenena al atacante.
+id: thorn_shield
+material: SHIELD
+name: "<gradient:#FB923C:#F97316><b>Escudo de Espinas</b></gradient>"
+lore:
+  - "<white>Repele a quien te golpea mientras"
+  - "<white>te cubres y lo envenena."
+activators:
+  repel:
+    type: DAMAGED
+    slot: HAND
+    cooldown: 2
+    cooldown-message: false
+    conditions:
+      - "BLOCKING"
+    actions:
+      - "@target VELOCITY: 1.4 0.5"
+      - "@target EFFECT: POISON 40 0"
+      - "SOUND: entity.puffer_fish.blow_up 0.8 1.2"

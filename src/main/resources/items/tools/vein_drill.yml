@@ -1,0 +1,21 @@
+# Herramientas · Taladro de Vetas: rompe toda la veta de mineral conectada.
+id: vein_drill
+material: NETHERITE_PICKAXE
+name: "<gradient:#FB923C:#F97316><b>Taladro de Vetas</b></gradient>"
+lore:
+  - "<white>Extrae la veta completa (hasta 48)."
+  - "<white>Minerales: <#F97316>%ores%"
+enchantments: { efficiency: 5, unbreaking: 3 }
+flags: [HIDE_ENCHANTS]
+variables: { ores: 0 }
+activators:
+  vein:
+    type: BLOCK_BREAK
+    conditions:
+      - "BLOCK_TYPE: *_ORE,ANCIENT_DEBRIS"
+      - "!SNEAKING"
+    actions:
+      - "VEIN_MINE: 48"
+      - "VARIABLE: ores + %broken%"
+      - "ACTIONBAR: <#F97316>⛏ Veta: <white>%broken% bloques"
+      - "SOUND: block.amethyst_block.chime 0.8 0.8"

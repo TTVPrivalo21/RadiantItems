@@ -1,0 +1,43 @@
+# PvP · Espada Vampírica: roba vida, cuenta bajas en el PDC y se vincula a su dueño.
+id: vampiric_sword
+material: NETHERITE_SWORD
+name: "<gradient:#FB923C:#F97316><b>Espada Vampírica</b></gradient>"
+lore:
+  - "<white>Cada golpe alimenta a su portador."
+  - ""
+  - "<#FB923C>❤</#FB923C> <white>Roba el <#F97316>25%</#F97316> del daño"
+  - "<#FB923C>☠</#FB923C> <white>Bajas: <#F97316>%kills%</#F97316>"
+  - "<#FB923C>✦</#FB923C> <white>Sed de sangre con <#F97316>25+</#F97316> bajas"
+  - "<dark_gray>Vinculada a: %owner%"
+texture: vampiric_sword
+model: handheld
+glow: true
+enchantments: { sharpness: 3, unbreaking: 3 }
+flags: [HIDE_ATTRIBUTES, HIDE_ENCHANTS]
+unbreakable: true
+attributes:
+  - "ATTACK_DAMAGE: 9 mainhand"
+  - "ATTACK_SPEED: -2.2 mainhand"
+  - "MAX_HEALTH: 4 mainhand"
+variables: { kills: 0 }
+restrictions: { keep-on-death: true, soulbound: true }
+activators:
+  lifesteal:
+    type: HIT_ENTITY
+    actions:
+      - "HEAL: %damage% * 0.25"
+      - "@target PARTICLE: DUST 12 0.3 0 #F97316 1.2"
+  bloodlust:
+    type: HIT_ENTITY
+    chance: 30
+    conditions:
+      - "VARIABLE: %kills% >= 25"
+    actions:
+      - "@target IGNITE: 40"
+      - "@target DAMAGE: 2"
+      - "SOUND: entity.wither.hurt 0.5 1.8"
+  count_kill:
+    type: KILL_ENTITY
+    actions:
+      - "VARIABLE: kills + 1"
+      - "ACTIONBAR: <#F97316>☠ Bajas: <white>%kills%"

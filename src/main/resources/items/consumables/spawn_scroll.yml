@@ -1,0 +1,15 @@
+# Consumibles · Pergamino del Spawn.
+id: spawn_scroll
+material: PAPER
+name: "<gradient:#FB923C:#F97316><b>Pergamino del Spawn</b></gradient>"
+lore:
+  - "<white>Te lleva al spawn del mundo actual."
+activators:
+  read:
+    type: RIGHT_CLICK
+    consume-item: true
+    actions:
+      - "PARTICLE_SPIRAL: END_ROD 0.8 2"
+      - "DELAY: 30"
+      - "TELEPORT: spawn"
+      - "SOUND: entity.enderman.teleport 1 1.2"

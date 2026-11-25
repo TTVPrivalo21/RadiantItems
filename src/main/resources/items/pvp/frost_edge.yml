@@ -1,0 +1,26 @@
+# PvP · Filo Glacial: ralentiza y lanza una nova de hielo.
+id: frost_edge
+material: IRON_SWORD
+name: "<gradient:#FB923C:#F97316><b>Filo Glacial</b></gradient>"
+lore:
+  - "<white>Ralentiza a tus enemigos con cada corte."
+  - "<#FB923C>Clic derecho</#FB923C> <dark_gray>»</dark_gray> <white>nova de hielo (12s)"
+glow: true
+enchantments: { sharpness: 2, unbreaking: 2 }
+flags: [HIDE_ENCHANTS]
+activators:
+  chill:
+    type: HIT_ENTITY
+    actions:
+      - "@target EFFECT: SLOWNESS 60 1"
+      - "@target PARTICLE: SNOWFLAKE 15 0.4 0.02"
+      - "SOUND: block.glass.break 0.4 1.8"
+  nova:
+    type: RIGHT_CLICK
+    cooldown: 12
+    actions:
+      - "@nearby:5 EFFECT: SLOWNESS 100 3"
+      - "@nearby:5 DAMAGE: 3"
+      - "PARTICLE_CIRCLE: SNOWFLAKE 3 40"
+      - "PARTICLE_CIRCLE: ITEM_SNOWBALL 4.5 50"
+      - "SOUND: entity.player.hurt_freeze 1 0.8"

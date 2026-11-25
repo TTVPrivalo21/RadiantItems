@@ -1,0 +1,15 @@
+# Cosméticos · Máscara de Dragón con aliento de partículas al agacharse.
+id: dragon_mask
+material: DRAGON_HEAD
+name: "<gradient:#FB923C:#F97316><b>Máscara de Dragón</b></gradient>"
+lore:
+  - "<white>Equipada: agáchate para echar humo."
+activators:
+  breath:
+    type: SNEAK
+    slot: ARMOR
+    cooldown: 2
+    cooldown-message: false
+    actions:
+      - "PARTICLE_LINE: SMOKE 4 0.3"
+      - "SOUND: entity.ender_dragon.growl 0.3 1.6"

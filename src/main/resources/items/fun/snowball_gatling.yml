@@ -1,0 +1,27 @@
+# Diversión · Ametralladora de Bolas de Nieve.
+id: snowball_gatling
+material: SNOWBALL
+name: "<gradient:#FB923C:#F97316><b>Ametralladora de Nieve</b></gradient>"
+lore:
+  - "<#FB923C>Clic derecho</#FB923C> <dark_gray>»</dark_gray> <white>ráfaga de 5 bolas"
+max-stack: 1
+activators:
+  burst:
+    type: RIGHT_CLICK
+    cooldown: 3
+    actions:
+      - "PROJECTILE: SNOWBALL 1.8"
+      - "DELAY: 2"
+      - "PROJECTILE: SNOWBALL 1.8"
+      - "DELAY: 2"
+      - "PROJECTILE: SNOWBALL 1.8"
+      - "DELAY: 2"
+      - "PROJECTILE: SNOWBALL 1.8"
+      - "DELAY: 2"
+      - "PROJECTILE: SNOWBALL 1.8"
+      - "SOUND: entity.snow_golem.shoot 1 1.3"
+  hit:
+    type: PROJECTILE_HIT
+    actions:
+      - "@target VELOCITY: 0.4 0.25"
+      - "@target PARTICLE: ITEM_SNOWBALL 8 0.2 0.05"

@@ -1,0 +1,23 @@
+# Movimiento · Cohete Infinito: impulso con élitros usando cargas.
+id: infinite_rocket
+material: FIREWORK_ROCKET
+name: "<gradient:#FB923C:#F97316><b>Cohete Infinito</b></gradient>"
+lore:
+  - "<white>Impulso al planear con élitros."
+  - "<white>Cargas: <#F97316>%uses%</#F97316>/%max_uses%"
+  - "<dark_gray>Recarga con pólvora."
+max-uses: 64
+break-on-empty: false
+recharge: { material: GUNPOWDER, uses: 8 }
+activators:
+  boost:
+    type: RIGHT_CLICK
+    cooldown: 1
+    cooldown-message: false
+    consume-usage: 1
+    conditions:
+      - "GLIDING | <#F97316>Solo funciona mientras planeas con élitros."
+    actions:
+      - "VELOCITY: 1.7 0.1"
+      - "PARTICLE: FIREWORK 10 0.2 0.05"
+      - "SOUND: entity.firework_rocket.launch 1 1"

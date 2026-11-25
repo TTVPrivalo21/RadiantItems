@@ -1,0 +1,23 @@
+# Cosméticos · Varita de Destellos: espiral y círculo de partículas.
+id: sparkle_wand
+material: AMETHYST_SHARD
+name: "<gradient:#FB923C:#F97316><b>Varita de Destellos</b></gradient>"
+lore:
+  - "<#FB923C>Clic derecho</#FB923C> <dark_gray>»</dark_gray> <white>espiral de destellos"
+  - "<#FB923C>Clic izquierdo</#FB923C> <dark_gray>»</dark_gray> <white>círculo ámbar"
+glow: true
+activators:
+  spiral:
+    type: RIGHT_CLICK
+    cooldown: 2
+    cooldown-message: false
+    actions:
+      - "PARTICLE_SPIRAL: END_ROD 1 2.5"
+      - "SOUND: block.amethyst_block.chime 1 1.5"
+  ring:
+    type: LEFT_CLICK
+    cooldown: 1
+    cooldown-message: false
+    actions:
+      - "PARTICLE_CIRCLE: DUST 1.5 30 #FB923C"
+      - "PARTICLE_CIRCLE: DUST 2 36 #F97316"

@@ -1,0 +1,25 @@
+# PvP · Espada del Vendaval: empuje al golpear y ráfaga en área.
+id: gale_sword
+material: GOLDEN_SWORD
+name: "<gradient:#FB923C:#F97316><b>Espada del Vendaval</b></gradient>"
+lore:
+  - "<white>Empuja lejos a lo que golpea."
+  - "<#FB923C>Clic derecho</#FB923C> <dark_gray>»</dark_gray> <white>ráfaga en área (8s)"
+unbreakable: true
+flags: [HIDE_UNBREAKABLE]
+attributes:
+  - "ATTACK_DAMAGE: 6 mainhand"
+  - "ATTACK_SPEED: -2.4 mainhand"
+activators:
+  knock:
+    type: HIT_ENTITY
+    actions:
+      - "@target VELOCITY: 1.6 0.45"
+      - "@target PARTICLE: CLOUD 10 0.3 0.05"
+  gust:
+    type: RIGHT_CLICK
+    cooldown: 8
+    actions:
+      - "@nearby:5 VELOCITY: 1.8 0.6"
+      - "PARTICLE: GUST 3 0.6 0"
+      - "SOUND: entity.wind_charge.wind_burst 1 1"

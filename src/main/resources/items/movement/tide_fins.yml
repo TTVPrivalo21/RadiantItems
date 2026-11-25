@@ -1,0 +1,17 @@
+# Movimiento · Aletas de Marea: gracia de delfín y respiración bajo el agua.
+id: tide_fins
+material: TURTLE_HELMET
+name: "<gradient:#FB923C:#F97316><b>Aletas de Marea</b></gradient>"
+lore:
+  - "<white>Equipadas en el agua:"
+  - "<#FB923C>»</#FB923C> <white>Gracia de delfín y respiración"
+activators:
+  swim:
+    type: HOLD_LOOP
+    slot: ARMOR
+    interval: 40
+    conditions:
+      - "IN_WATER"
+    actions:
+      - "EFFECT: DOLPHINS_GRACE 60 0 hide"
+      - "EFFECT: WATER_BREATHING 200 0 hide"

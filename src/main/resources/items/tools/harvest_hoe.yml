@@ -1,0 +1,18 @@
+# Herramientas · Azada de Cosecha: cosecha y replanta cultivos maduros.
+id: harvest_hoe
+material: GOLDEN_HOE
+name: "<gradient:#FB923C:#F97316><b>Azada de Cosecha</b></gradient>"
+lore:
+  - "<#FB923C>Clic derecho en cultivo</#FB923C> <dark_gray>»</dark_gray> <white>cosecha 7x7 y replanta"
+unbreakable: true
+flags: [HIDE_UNBREAKABLE]
+activators:
+  harvest:
+    type: RIGHT_CLICK
+    click: BLOCK
+    cooldown: 1
+    cooldown-message: false
+    actions:
+      - "HARVEST: 3"
+      - "ACTIONBAR: <#F97316>🌾 Cosechados: <white>%harvested%"
+      - "SOUND: block.crop.break 1 1.2"

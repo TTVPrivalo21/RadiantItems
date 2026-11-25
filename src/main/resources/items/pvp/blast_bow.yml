@@ -1,0 +1,20 @@
+# PvP · Arco Explosivo: PROJECTILE_HIT con explosión segura y cargas recargables.
+id: blast_bow
+material: BOW
+name: "<gradient:#FB923C:#F97316><b>Arco Explosivo</b></gradient>"
+lore:
+  - "<white>Las flechas estallan al impactar"
+  - "<white>(sin romper bloques)."
+  - "<white>Cargas: <#F97316>%uses%</#F97316>/%max_uses%"
+  - "<dark_gray>Recarga con pólvora."
+max-uses: 30
+break-on-empty: false
+recharge: { material: GUNPOWDER, uses: 5 }
+glow: true
+activators:
+  boom:
+    type: PROJECTILE_HIT
+    consume-usage: 1
+    actions:
+      - "@block EXPLOSION: 1.8"
+      - "@block PARTICLE: LARGE_SMOKE 15 0.6 0.02"

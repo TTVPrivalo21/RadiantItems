@@ -1,0 +1,23 @@
+# PvP · Colmillo Venenoso: usos limitados con recarga por ojos de araña.
+id: venom_fang
+material: STONE_SWORD
+name: "<gradient:#FB923C:#F97316><b>Colmillo Venenoso</b></gradient>"
+lore:
+  - "<white>35% de envenenar al objetivo."
+  - "<white>Usos: <#F97316>%uses%</#F97316>/<white>%max_uses%"
+  - "<dark_gray>Recarga con ojos de araña."
+max-uses: 80
+break-on-empty: false
+recharge: { material: SPIDER_EYE, uses: 10 }
+enchantments: { sharpness: 3 }
+flags: [HIDE_ENCHANTS]
+glow: true
+activators:
+  poison:
+    type: HIT_ENTITY
+    chance: 35
+    consume-usage: 1
+    actions:
+      - "@target EFFECT: POISON 80 1"
+      - "@target PARTICLE: DUST 10 0.3 0 #6abf3d 1"
+      - "SOUND: entity.spider.ambient 0.6 1.5"

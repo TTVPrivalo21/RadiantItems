@@ -1,0 +1,16 @@
+# Diversión · Varita Lanzaovejas (las ovejas desaparecen a los 5s, sin drops).
+id: sheep_wand
+material: WHITE_WOOL
+name: "<gradient:#FB923C:#F97316><b>Varita Lanzaovejas</b></gradient>"
+lore:
+  - "<#FB923C>Clic derecho</#FB923C> <dark_gray>»</dark_gray> <white>¡beeee!"
+glow: true
+max-stack: 1
+activators:
+  throw:
+    type: RIGHT_CLICK
+    cooldown: 1.5
+    cooldown-message: false
+    actions:
+      - "LAUNCH_ENTITY: SHEEP 1.5 100"
+      - "SOUND: entity.sheep.ambient 1 1.4"

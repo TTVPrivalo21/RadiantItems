@@ -1,0 +1,15 @@
+# Diversión · Martillo Celeste: lanza al aire a quien golpea.
+id: sky_hammer
+material: MACE
+name: "<gradient:#FB923C:#F97316><b>Martillo Celeste</b></gradient>"
+lore:
+  - "<white>Manda a tus amigos a las nubes."
+activators:
+  launch:
+    type: HIT_ENTITY
+    cooldown: 2
+    cooldown-message: false
+    actions:
+      - "@target VELOCITY: 0 1.4 0"
+      - "@target PARTICLE: CLOUD 20 0.4 0.05"
+      - "SOUND: entity.wind_charge.wind_burst 1 0.8"

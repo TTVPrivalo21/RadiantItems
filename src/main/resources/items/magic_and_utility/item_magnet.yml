@@ -1,0 +1,19 @@
+# Utilidad · Imán: en la mano secundaria atrae ítems y experiencia.
+id: item_magnet
+material: IRON_INGOT
+name: "<gradient:#FB923C:#F97316><b>Imán de Ítems</b></gradient>"
+lore:
+  - "<white>En la mano secundaria atrae ítems"
+  - "<white>y experiencia en 8 bloques."
+  - "<dark_gray>Agáchate para pausarlo."
+glow: true
+max-stack: 1
+activators:
+  pull:
+    type: HOLD_LOOP
+    slot: OFF_HAND
+    interval: 10
+    conditions:
+      - "!SNEAKING"
+    actions:
+      - "MAGNET: 8 0.6"

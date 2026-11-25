@@ -1,0 +1,23 @@
+# Herramientas · Caña Magnética: atrae ítems y experiencia.
+id: magnet_rod
+material: FISHING_ROD
+name: "<gradient:#FB923C:#F97316><b>Caña Magnética</b></gradient>"
+lore:
+  - "<#FB923C>Clic derecho</#FB923C> <dark_gray>»</dark_gray> <white>atrae ítems en 12 bloques"
+  - "<#FB923C>Shift + clic</#FB923C> <dark_gray>»</dark_gray> <white>atrae mobs cercanos"
+unbreakable: true
+flags: [HIDE_UNBREAKABLE]
+activators:
+  pull_items:
+    type: RIGHT_CLICK
+    cooldown: 2
+    actions:
+      - "MAGNET: 12 0.8"
+      - "PARTICLE_CIRCLE: ENCHANT 2 30"
+      - "SOUND: entity.item.pickup 1 0.6"
+  pull_mobs:
+    type: SHIFT_RIGHT_CLICK
+    cooldown: 10
+    actions:
+      - "@nearby:10 VELOCITY: -1.2 0.4"
+      - "SOUND: entity.fishing_bobber.retrieve 1 0.8"

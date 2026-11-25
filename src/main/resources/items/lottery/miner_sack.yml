@@ -1,0 +1,13 @@
+# Lotería · Saco del Minero: minerales aleatorios.
+id: miner_sack
+material: BROWN_DYE
+name: "<gradient:#FB923C:#F97316><b>Saco del Minero</b></gradient>"
+lore:
+  - "<white>Contiene minerales al azar."
+activators:
+  open:
+    type: RIGHT_CLICK
+    consume-item: true
+    actions:
+      - "LOOT: 35=GIVE_ITEM: COAL 24 ;; 25=GIVE_ITEM: RAW_IRON 12 ;; 20=GIVE_ITEM: RAW_COPPER 24 ;; 12=GIVE_ITEM: RAW_GOLD 8 ;; 6=GIVE_ITEM: LAPIS_LAZULI 16 ;; 2=GIVE_ITEM: DIAMOND 3"
+      - "SOUND: block.stone.break 1 0.8"

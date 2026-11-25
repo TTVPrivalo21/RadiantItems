@@ -1,0 +1,19 @@
+# Herramientas · Perforadora de Túneles 3x3x3.
+id: tunnel_bore
+material: DIAMOND_PICKAXE
+name: "<gradient:#FB923C:#F97316><b>Perforadora de Túneles</b></gradient>"
+lore:
+  - "<white>Abre un túnel de 3x3 y 3 de fondo."
+  - "<white>Usos: <#F97316>%uses%</#F97316>/%max_uses%"
+max-uses: 300
+recharge: { material: REDSTONE, uses: 20 }
+enchantments: { efficiency: 3 }
+flags: [HIDE_ENCHANTS]
+activators:
+  bore:
+    type: BLOCK_BREAK
+    consume-usage: 1
+    conditions:
+      - "!SNEAKING"
+    actions:
+      - "MINE_AREA: 1 2 true"

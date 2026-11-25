@@ -1,0 +1,27 @@
+# Diversión · Trompeta: sonidos de cuerno de cabra.
+id: party_trumpet
+material: GOAT_HORN
+name: "<gradient:#FB923C:#F97316><b>Trompeta de Fiesta</b></gradient>"
+lore:
+  - "<#FB923C>Clic derecho</#FB923C> <dark_gray>»</dark_gray> <white>tocar"
+  - "<#FB923C>Shift + clic</#FB923C> <dark_gray>»</dark_gray> <white>fanfarria"
+activators:
+  toot:
+    type: RIGHT_CLICK
+    cooldown: 3
+    cooldown-message: false
+    actions:
+      - "SOUND: item.goat_horn.sound.0 2 1"
+      - "PARTICLE: NOTE 8 0.6 1"
+  fanfare:
+    type: SHIFT_RIGHT_CLICK
+    cooldown: 10
+    actions:
+      - "SOUND: block.note_block.bell 1 1"
+      - "DELAY: 4"
+      - "SOUND: block.note_block.bell 1 1.26"
+      - "DELAY: 4"
+      - "SOUND: block.note_block.bell 1 1.5"
+      - "DELAY: 6"
+      - "SOUND: block.note_block.bell 1 2"
+      - "PARTICLE: NOTE 20 1 1"

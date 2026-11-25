@@ -1,0 +1,16 @@
+# Utilidad · Bolsa del End: abre tu cofre de ender en cualquier parte.
+id: ender_pouch
+material: ENDER_CHEST
+name: "<gradient:#FB923C:#F97316><b>Bolsa del End</b></gradient>"
+lore:
+  - "<#FB923C>Clic derecho</#FB923C> <dark_gray>»</dark_gray> <white>abrir cofre de ender"
+glow: true
+max-stack: 1
+activators:
+  open:
+    type: RIGHT_CLICK
+    cooldown: 1
+    cooldown-message: false
+    actions:
+      - "OPEN: enderchest"
+      - "SOUND: block.ender_chest.open 1 1"

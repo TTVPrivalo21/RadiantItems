@@ -1,0 +1,40 @@
+# Magia · Amuleto del Viento: HOLD_LOOP en la mano secundaria + EQUIP/UNEQUIP.
+id: speed_amulet
+material: HEART_OF_THE_SEA
+name: "<gradient:#FB923C:#F97316><b>Amuleto del Viento</b></gradient>"
+lore:
+  - "<white>En la <#F97316>mano secundaria</#F97316>:"
+  - "<#FB923C>»</#FB923C> <white>Velocidad I"
+  - "<#FB923C>»</#FB923C> <white>Regeneración I con menos de 14 de vida"
+texture: speed_amulet
+model: generated
+glow: true
+flags: [HIDE_ATTRIBUTES, HIDE_ENCHANTS]
+max-stack: 1
+activators:
+  aura:
+    type: HOLD_LOOP
+    slot: OFF_HAND
+    interval: 40
+    actions:
+      - "EFFECT: SPEED 60 0 hide"
+      - "PARTICLE: HAPPY_VILLAGER 2 0.4 0"
+  regen:
+    type: HOLD_LOOP
+    slot: OFF_HAND
+    interval: 60
+    conditions:
+      - "MAX_HEALTH: 13.9"
+    actions:
+      - "EFFECT: REGENERATION 80 0 hide"
+  equip:
+    type: EQUIP
+    slot: OFF_HAND
+    actions:
+      - "SOUND: block.amethyst_block.chime 1 1.4"
+      - "ACTIONBAR: <#F97316>El viento te acompaña."
+  unequip:
+    type: UNEQUIP
+    slot: OFF_HAND
+    actions:
+      - "REMOVE_EFFECT: SPEED"

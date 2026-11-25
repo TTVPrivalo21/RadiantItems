@@ -1,0 +1,15 @@
+# Consumibles · Estofado del Viajero: 5 usos.
+id: traveler_stew
+material: MUSHROOM_STEW
+name: "<gradient:#FB923C:#F97316><b>Estofado del Viajero</b></gradient>"
+lore:
+  - "<white>Saciedad completa y Velocidad I."
+  - "<white>Raciones: <#F97316>%uses%</#F97316>/%max_uses%"
+max-uses: 5
+activators:
+  eat:
+    type: CONSUME
+    consume-usage: 1
+    actions:
+      - "FEED: 20 20"
+      - "EFFECT: SPEED 600 0"

@@ -1,0 +1,14 @@
+# Diversión · Varita de Burbujas.
+id: bubble_wand
+material: PRISMARINE_SHARD
+name: "<gradient:#FB923C:#F97316><b>Varita de Burbujas</b></gradient>"
+lore:
+  - "<#FB923C>Clic derecho</#FB923C> <dark_gray>»</dark_gray> <white>burbujas"
+activators:
+  bubbles:
+    type: RIGHT_CLICK
+    cooldown: 0.5
+    cooldown-message: false
+    actions:
+      - "PARTICLE_LINE: BUBBLE_POP 6 0.3"
+      - "SOUND: entity.puffer_fish.blow_out 1 1.6"

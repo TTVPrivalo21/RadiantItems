@@ -1,0 +1,24 @@
+# Herramientas · Pico Explosivo 3x3 (respeta protecciones, bedrock y lista negra).
+id: explosive_pickaxe
+material: DIAMOND_PICKAXE
+name: "<gradient:#FB923C:#F97316><b>Pico Explosivo</b></gradient>"
+lore:
+  - "<white>Pica un área de <#F97316>3x3</#F97316> de golpe."
+  - "<dark_gray>Agáchate para picar un solo bloque."
+  - "<white>Bloques picados: <#F97316>%mined%"
+texture: explosive_pickaxe
+model: handheld
+enchantments: { efficiency: 4, unbreaking: 3 }
+flags: [HIDE_ENCHANTS]
+variables: { mined: 0 }
+restrictions: { can-anvil: true }
+activators:
+  blast:
+    type: BLOCK_BREAK
+    conditions:
+      - "!SNEAKING"
+    actions:
+      - "MINE_AREA: 1 0 true"
+      - "VARIABLE: mined + %broken%"
+      - "@block PARTICLE: EXPLOSION 1 0 0"
+      - "@block SOUND: entity.generic.explode 0.4 1.6"

@@ -1,0 +1,17 @@
+# Herramientas · Varita de Construcción: extiende el bloque clicado.
+id: builder_wand
+material: BLAZE_ROD
+name: "<gradient:#FB923C:#F97316><b>Varita de Construcción</b></gradient>"
+lore:
+  - "<#FB923C>Clic derecho en bloque</#FB923C> <dark_gray>»</dark_gray> <white>extiende 8 bloques"
+  - "<dark_gray>Usa bloques de tu inventario (en survival)."
+glow: true
+activators:
+  extend:
+    type: RIGHT_CLICK
+    click: BLOCK
+    cooldown: 0.5
+    cooldown-message: false
+    actions:
+      - "BUILD_LINE: 8"
+      - "ACTIONBAR: <#F97316>🧱 Colocados: <white>%placed%"

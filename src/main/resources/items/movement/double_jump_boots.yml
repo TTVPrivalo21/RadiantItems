@@ -1,0 +1,24 @@
+# Movimiento · Botas de Doble Salto: agáchate en el aire para un segundo salto.
+id: double_jump_boots
+material: LEATHER_BOOTS
+name: "<gradient:#FB923C:#F97316><b>Botas de Doble Salto</b></gradient>"
+color: "#F97316"
+lore:
+  - "<white>Equipadas: agáchate <#F97316>en el aire</#F97316>"
+  - "<white>para dar un segundo salto."
+flags: [HIDE_DYE, HIDE_ATTRIBUTES]
+attributes:
+  - "ARMOR: 2 feet"
+activators:
+  double_jump:
+    type: SNEAK
+    slot: ARMOR
+    cooldown: 1.5
+    conditions:
+      - "!ON_GROUND"
+      - "!FLYING"
+    actions:
+      - "VELOCITY: 0.5 0.85"
+      - "NO_FALL: 60"
+      - "PARTICLE_CIRCLE: CLOUD 0.6 14"
+      - "SOUND: entity.breeze.jump 0.8 1.4"

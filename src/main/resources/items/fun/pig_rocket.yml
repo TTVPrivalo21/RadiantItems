@@ -1,0 +1,16 @@
+# Diversión · Cerdo Cohete.
+id: pig_rocket
+material: CARROT_ON_A_STICK
+name: "<gradient:#FB923C:#F97316><b>Cerdo Cohete</b></gradient>"
+lore:
+  - "<#FB923C>Clic derecho</#FB923C> <dark_gray>»</dark_gray> <white>lanza un cerdo con fuegos"
+unbreakable: true
+flags: [HIDE_UNBREAKABLE]
+activators:
+  launch:
+    type: RIGHT_CLICK
+    cooldown: 4
+    actions:
+      - "LAUNCH_ENTITY: PIG 1.6 60"
+      - "FIREWORK: BALL #F97316 1"
+      - "SOUND: entity.pig.ambient 1 1.5"

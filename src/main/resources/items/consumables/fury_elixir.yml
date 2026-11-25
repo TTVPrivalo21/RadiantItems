@@ -1,0 +1,21 @@
+# Consumibles · Elixir de Furia: fuerza y velocidad a cambio de vida.
+id: fury_elixir
+material: POTION
+name: "<gradient:#FB923C:#F97316><b>Elixir de Furia</b></gradient>"
+color: "#F97316"
+lore:
+  - "<white>Fuerza II y Velocidad II durante 30s."
+  - "<dark_gray>Te cuesta 4 de vida."
+flags: [HIDE_ADDITIONAL_TOOLTIP]
+activators:
+  drink:
+    type: CONSUME
+    consume-item: true
+    conditions:
+      - "MIN_HEALTH: 6"
+    actions:
+      - "DAMAGE: 4"
+      - "EFFECT: STRENGTH 600 1"
+      - "EFFECT: SPEED 600 1"
+      - "PARTICLE: ANGRY_VILLAGER 6 0.5 0"
+      - "SOUND: entity.ravager.roar 0.6 1.4"

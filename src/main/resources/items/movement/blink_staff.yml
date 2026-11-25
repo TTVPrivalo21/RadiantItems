@@ -1,0 +1,18 @@
+# Movimiento · Bastón de Blink: teletransporte corto.
+id: blink_staff
+material: END_ROD
+name: "<gradient:#FB923C:#F97316><b>Bastón de Blink</b></gradient>"
+lore:
+  - "<#FB923C>Clic derecho</#FB923C> <dark_gray>»</dark_gray> <white>teletransporte de 10 bloques"
+glow: true
+activators:
+  blink:
+    type: RIGHT_CLICK
+    cooldown: 4
+    actions:
+      - "PARTICLE: PORTAL 30 0.4 0.3"
+      - "BLINK: 10"
+      - "PARTICLE: REVERSE_PORTAL 30 0.4 0.05"
+      - "SOUND: entity.enderman.teleport 1 1.3"
+    messages:
+      mode: actionbar

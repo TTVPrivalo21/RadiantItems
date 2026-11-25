@@ -1,0 +1,15 @@
+# Consumibles · Galleta Dorada: pequeña cura y suerte.
+id: golden_cookie
+material: COOKIE
+name: "<gradient:#FB923C:#F97316><b>Galleta Dorada</b></gradient>"
+lore:
+  - "<white>Recupera 2 corazones y te da Suerte."
+glow: true
+activators:
+  eat:
+    type: CONSUME
+    consume-item: true
+    actions:
+      - "HEAL: 4"
+      - "FEED: 2 2"
+      - "EFFECT: LUCK 1200 0"

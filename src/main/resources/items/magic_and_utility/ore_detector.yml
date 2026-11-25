@@ -1,0 +1,18 @@
+# Utilidad · Detector de Minerales: escanea 10 bloques a la redonda.
+id: ore_detector
+material: SPYGLASS
+name: "<gradient:#FB923C:#F97316><b>Detector de Minerales</b></gradient>"
+lore:
+  - "<#FB923C>Clic izquierdo</#FB923C> <dark_gray>»</dark_gray> <white>escanear minerales (10 bloques)"
+  - "<white>Pilas: <#F97316>%uses%</#F97316>/%max_uses%"
+max-uses: 40
+break-on-empty: false
+recharge: { material: REDSTONE, uses: 8 }
+activators:
+  scan:
+    type: LEFT_CLICK
+    cooldown: 5
+    consume-usage: 1
+    actions:
+      - "DETECT: ores 10"
+      - "SOUND: block.note_block.bit 1 1.8"

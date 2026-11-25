@@ -1,0 +1,18 @@
+# Movimiento · Bastón del Viajero: viaje largo con canalización.
+id: warp_staff
+material: BREEZE_ROD
+name: "<gradient:#FB923C:#F97316><b>Bastón del Viajero</b></gradient>"
+lore:
+  - "<#FB923C>Clic derecho</#FB923C> <dark_gray>»</dark_gray> <white>salto de 25 bloques (20s)"
+  - "<dark_gray>Cuesta 1 nivel de experiencia."
+activators:
+  warp:
+    type: RIGHT_CLICK
+    cooldown: 20
+    conditions:
+      - "XP_COST: 1"
+    actions:
+      - "PARTICLE_SPIRAL: PORTAL 0.8 2"
+      - "DELAY: 15"
+      - "BLINK: 25"
+      - "SOUND: entity.enderman.teleport 1 0.8"

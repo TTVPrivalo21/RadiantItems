@@ -1,0 +1,15 @@
+# Magia · Amuleto de Fuerza (mano secundaria).
+id: strength_amulet
+material: BLAZE_POWDER
+name: "<gradient:#FB923C:#F97316><b>Amuleto de Fuerza</b></gradient>"
+lore:
+  - "<white>En la mano secundaria: Fuerza I."
+glow: true
+max-stack: 1
+activators:
+  aura:
+    type: HOLD_LOOP
+    slot: OFF_HAND
+    interval: 40
+    actions:
+      - "EFFECT: STRENGTH 60 0 hide"

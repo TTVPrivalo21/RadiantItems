@@ -1,0 +1,21 @@
+# ─────────────────────────────────────────────────────────────
+#  items.yml · alternativa a items/<id>.yml
+#  Puedes definir aquí varios ítems bajo "items:" con el mismo
+#  formato que los archivos de la carpeta items/. Si editas uno
+#  con /ri edit, se mueve automáticamente a items/<id>.yml.
+# ─────────────────────────────────────────────────────────────
+items:
+  starter_wand:
+    material: STICK
+    name: "<gradient:#FB923C:#F97316><b>Varita del Aprendiz</b></gradient>"
+    lore:
+      - "<white>Un ejemplo mínimo definido en items.yml."
+      - "<#FB923C>Clic derecho</#FB923C> <dark_gray>»</dark_gray> <white>chispa"
+    glow: true
+    activators:
+      spark:
+        type: RIGHT_CLICK
+        cooldown: 1
+        actions:
+          - "PARTICLE_LINE: END_ROD 8 0.5"
+          - "SOUND: block.note_block.chime 1 1.6"

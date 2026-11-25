@@ -1,0 +1,30 @@
+# Consumibles · Pergamino de Retorno: canaliza y vuelve a tu cama.
+id: teleport_scroll
+material: PAPER
+name: "<gradient:#FB923C:#F97316><b>Pergamino de Retorno</b></gradient>"
+lore:
+  - "<white>Te devuelve a tu cama tras"
+  - "<white>3 segundos de canalización."
+  - "<dark_gray>Se consume al usarlo."
+texture: teleport_scroll
+model: generated
+glow: true
+activators:
+  read:
+    type: RIGHT_CLICK
+    cooldown: 5
+    consume-item: true
+    conditions:
+      - "!WORLD: world_the_end | <#F97316>La magia del pergamino no funciona en el End."
+    actions:
+      - "TITLE: <#F97316>Canalizando… | <white>no te alejes | 5 60 10"
+      - "SOUND: block.portal.trigger 0.4 1.6"
+      - "PARTICLE_SPIRAL: WITCH 0.9 2"
+      - "DELAY: 20"
+      - "PARTICLE_CIRCLE: DUST 1.2 28 #FB923C"
+      - "DELAY: 20"
+      - "PARTICLE_CIRCLE: DUST 0.8 20 #F97316"
+      - "DELAY: 20"
+      - "TELEPORT: bed"
+      - "SOUND: entity.enderman.teleport 1 1"
+      - "PARTICLE: REVERSE_PORTAL 60 0.5 0.1"

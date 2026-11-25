@@ -1,0 +1,15 @@
+# Cosméticos · Aureola en la mano secundaria.
+id: halo_ring
+material: GOLD_NUGGET
+name: "<gradient:#FB923C:#F97316><b>Anillo de la Aureola</b></gradient>"
+lore:
+  - "<white>En la mano secundaria: aureola de luz."
+glow: true
+max-stack: 1
+activators:
+  halo:
+    type: HOLD_LOOP
+    slot: OFF_HAND
+    interval: 10
+    actions:
+      - "PARTICLE: END_ROD 2 0.25 0"

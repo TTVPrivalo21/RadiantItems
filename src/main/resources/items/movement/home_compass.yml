@@ -1,0 +1,20 @@
+# Movimiento · Brújula del Hogar: vuelve al spawn del mundo.
+id: home_compass
+material: COMPASS
+name: "<gradient:#FB923C:#F97316><b>Brújula del Hogar</b></gradient>"
+lore:
+  - "<#FB923C>Clic derecho</#FB923C> <dark_gray>»</dark_gray> <white>volver al spawn (5 min)"
+  - "<dark_gray>No funciona en combate (vida mínima 10)."
+glow: true
+activators:
+  home:
+    type: RIGHT_CLICK
+    cooldown: 300
+    conditions:
+      - "MIN_HEALTH: 10"
+    actions:
+      - "TITLE: <#F97316>Volviendo… | <white>no te muevas | 5 40 10"
+      - "PARTICLE_SPIRAL: END_ROD 0.8 2"
+      - "DELAY: 40"
+      - "TELEPORT: spawn"
+      - "SOUND: entity.enderman.teleport 1 1"

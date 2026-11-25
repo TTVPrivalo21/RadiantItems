@@ -1,0 +1,20 @@
+# Diversión · Cañón de TNT segura: no rompe bloques ni daña jugadores.
+id: tnt_cannon
+material: IRON_HORSE_ARMOR
+name: "<gradient:#FB923C:#F97316><b>Cañón de TNT</b></gradient>"
+lore:
+  - "<#FB923C>Clic derecho</#FB923C> <dark_gray>»</dark_gray> <white>dispara TNT inofensiva"
+  - "<white>Munición: <#F97316>%uses%</#F97316>/%max_uses%"
+  - "<dark_gray>Recarga con pólvora."
+max-uses: 16
+break-on-empty: false
+recharge: { material: GUNPOWDER, uses: 4 }
+activators:
+  fire:
+    type: RIGHT_CLICK
+    cooldown: 2
+    consume-usage: 1
+    actions:
+      - "LAUNCH_ENTITY: TNT 1.4 40"
+      - "SOUND: entity.generic.explode 0.4 1.8"
+      - "VELOCITY: -0.4 0.1"

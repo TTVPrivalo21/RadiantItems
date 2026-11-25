@@ -1,0 +1,30 @@
+# PvP · Hoja del Trueno: rayos al golpear. Ejemplo de permiso por ítem.
+id: thunder_blade
+material: DIAMOND_SWORD
+name: "<gradient:#FB923C:#F97316><b>Hoja del Trueno</b></gradient>"
+permission: "radiantitems.use.thunder_blade"
+no-permission-message: "<#F97316>⚡ Solo los campeones pueden blandir la Hoja del Trueno."
+lore:
+  - "<white>20% de invocar un rayo al golpear."
+  - "<#FB923C>Shift + clic derecho</#FB923C> <dark_gray>»</dark_gray> <white>tormenta (20s)"
+  - "<dark_gray>Requiere radiantitems.use.thunder_blade"
+glow: true
+enchantments: { sharpness: 4 }
+flags: [HIDE_ENCHANTS]
+activators:
+  strike:
+    type: HIT_ENTITY
+    chance: 20
+    cooldown: 3
+    cooldown-message: false
+    actions:
+      - "@target LIGHTNING effect"
+      - "@target DAMAGE: 5"
+      - "@target PARTICLE: ELECTRIC_SPARK 30 0.4 0.2"
+  storm:
+    type: SHIFT_RIGHT_CLICK
+    cooldown: 20
+    actions:
+      - "@nearby:6 LIGHTNING effect"
+      - "@nearby:6 DAMAGE: 4"
+      - "SOUND: entity.lightning_bolt.thunder 0.8 1.2"

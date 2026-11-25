@@ -1,0 +1,8 @@
+# Cosméticos · Cabeza de Leyenda: PLAYER_HEAD con textura base64 (cámbiala por la tuya).
+id: legend_head
+material: PLAYER_HEAD
+name: "<gradient:#FB923C:#F97316><b>Cabeza de Leyenda</b></gradient>"
+skull-texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjkyMDA5YTQ5MjViNThmMDJjNzdkYWRjM2VjZWYwN2VhNGM3NDcyZjY0ZTBmZGMzMmNlNTUyMjQ4OTM2MjY4MCJ9fX0="
+lore:
+  - "<white>Una cabeza decorativa con textura base64."
+  - "<dark_gray>Edítala con /ri edit legend_head."

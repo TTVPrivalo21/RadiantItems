@@ -1,0 +1,176 @@
+# ─────────────────────────────────────────────────────────────
+#  RadiantItems · configuración principal
+#  Los ítems se definen en plugins/RadiantItems/items/<id>.yml
+#  (uno por archivo) o en items.yml bajo la sección "items:".
+# ─────────────────────────────────────────────────────────────
+
+# Ítems: se cargan recursivamente todos los .yml de items/ y sus subcarpetas (sin límite).
+items:
+  # Extrae el catálogo de 100 ítems por defecto (items/<categoria>/*.yml) si items/ está vacía.
+  generate-defaults: true
+
+# Permiso por ítem ("permission:" en el YAML del ítem). Quien tenga este nodo se lo salta.
+permissions:
+  bypass-item-permission: radiantitems.bypass.permission
+
+# Recarga automática: si cambias un archivo de items/ o textures/ se recarga solo.
+auto-reload:
+  enabled: true
+  interval-seconds: 3
+
+# Cada cuántos ticks se revisan manos/armadura (HOLD_LOOP, EQUIP, UNEQUIP).
+loop:
+  interval-ticks: 5
+  # Cada cuántos ticks se actualizan los ítems antiguos del inventario cuando cambias su YAML.
+  update-interval-ticks: 100
+
+# Formato de los placeholders internos en lore/mensajes.
+format:
+  unlimited-uses: "∞"
+  cooldown-ready: "<green>Listo</green>"
+  cooldown: "<yellow>%time%s</yellow>"
+  no-owner: "<gray>Nadie</gray>"
+
+# Pico/acción MINE_AREA
+mine-area:
+  max-hardness: 50.0
+  blacklist:
+    - BEDROCK
+    - BARRIER
+    - END_PORTAL_FRAME
+    - END_PORTAL
+    - NETHER_PORTAL
+    - COMMAND_BLOCK
+    - CHAIN_COMMAND_BLOCK
+    - REPEATING_COMMAND_BLOCK
+    - STRUCTURE_BLOCK
+    - JIGSAW
+    - REINFORCED_DEEPSLATE
+    - SPAWNER
+    - TRIAL_SPAWNER
+    - VAULT
+
+# ─────────────────────────────────────────────────────────────
+#  Resource pack (OPCIONAL y secundario)
+#  El plugin funciona al 100 % con ítems vanilla sin ningún pack.
+#  false → no se levanta el servidor HTTP, no se envía nada y el
+#          campo "texture:" de los ítems se ignora.
+#  true  → genera el pack desde textures/items/*.png, lo sirve por
+#          HTTP y asigna item_model a los ítems con "texture:".
+# ─────────────────────────────────────────────────────────────
+resource-pack:
+  enabled: false
+
+# Ajustes del pack (solo se usan con resource-pack.enabled: true)
+pack:
+  send-on-join: true
+  send-delay-ticks: 40
+  required: false
+  prompt: "<gold>RadiantItems</gold> <gray>usa texturas propias para sus ítems.</gray>"
+  description: "<gold>RadiantItems</gold> <gray>· ítems personalizados</gray>"
+  # 46 = 1.21.4. min/max cubren 1.21.4 → 26.x
+  pack-format: 46
+  min-format: 46
+  max-format: 999
+  # Asigna item_model (1.21.4+) a los ítems con "texture:". Si el jugador rechaza el pack verá el ítem sin textura.
+  use-item-model: true
+  # Genera assets/minecraft/items/<material>.json con range_dispatch para ítems con custom-model-data + texture.
+  custom-model-data-dispatch: true
+  # Si http.enabled=false, URL externa donde subes tú el zip ({sha1} se reemplaza).
+  external-url: ""
+
+http:
+  enabled: true
+  bind: 0.0.0.0
+  port: 8166
+  # URL pública que verán los jugadores, ej. "http://mc.miservidor.com:8166". Vacío = autodetectar.
+  public-url: ""
+  threads: 2
+
+# ─────────────────────────────────────────────────────────────
+#  Mensajes (MiniMessage o &códigos)
+# ─────────────────────────────────────────────────────────────
+messages:
+  prefix: "<dark_gray>[<gradient:#FB923C:#F97316>RadiantItems</gradient><dark_gray>]</dark_gray> "
+  no-permission: "<red>No tienes permiso para hacer eso."
+  player-only: "<red>Este comando solo puede usarlo un jugador."
+  unknown-item: "<red>No existe ningún ítem con id <white>%id%</white>."
+  player-not-found: "<red>Jugador <white>%player%</white> no encontrado."
+  invalid-number: "<red><white>%value%</white> no es un número válido."
+  invalid-id: "<red>Id inválido: usa solo minúsculas, números, '_' o '-'."
+  given: "<green>Diste <white>%amount%x %item%</white> a <white>%player%</white>."
+  received: "<green>Recibiste <white>%amount%x %item%</white>."
+  list-header: "<#FB923C>Ítems cargados (<white>%count%</white>)<gray>%filter%<#FB923C>:"
+  list-category: "<#F97316>▸ %category% <dark_gray>(%count%)"
+  list-categories: "<gray>Categorías: <white>%categories%"
+  list-entry: "  <dark_gray>• <#FB923C>%id%</#FB923C> <white>%name%</white> <dark_gray>[%material%, %activators% activadores]"
+  not-custom: "<red>No sostienes un ítem de RadiantItems."
+  forged-item: "<red>Este ítem tiene datos de RadiantItems con firma inválida (copiado o falsificado)."
+  info: |-
+    <gold>Ítem: <yellow>%id%</yellow> <gray>(%name%<gray>)
+    <gray>Material: <white>%material%</white>  Usos: <white>%uses%/%max_uses%</white>
+    <gray>UUID: <white>%uuid%</white>  Dueño: <white>%owner%</white>
+    <gray>Variables: <white>%vars%</white>
+    <gray>Activadores: <white>%activators%</white>
+  setuses-done: "<green>Usos establecidos a <white>%uses%/%max_uses%</white>."
+  setuses-unlimited: "<red>Este ítem no tiene usos limitados (max-uses: 0)."
+  reloaded: "<green>RadiantItems recargado: <white>%count%</white> ítems."
+  created: "<green>Ítem <white>%id%</white> creado. Abriendo el editor..."
+  already-exists: "<red>Ya existe un ítem con id <white>%id%</white>."
+  deleted: "<yellow>Ítem <white>%id%</white> movido a items/.trash/."
+  pack-sent: "<green>Enviando el resource pack..."
+  pack-loaded: "<green>Resource pack cargado correctamente."
+  pack-unavailable: "<red>El resource pack está desactivado (resource-pack.enabled: false) o aún se está generando."
+  pack-rebuilt: "<green>Resource pack regenerado (SHA-1 <white>%sha1%</white>)."
+  chat-prompt: "<gold>»</gold> <yellow>%prompt%</yellow> <gray>(escribe <white>cancelar</white> para salir)"
+  chat-cancelled: "<gray>Entrada cancelada."
+  chat-timeout: "<gray>Se acabó el tiempo para escribir."
+  chat-invalid: "<red>%error%"
+  editor-saved: "<green>Guardado en <white>items/%id%.yml</white>."
+  soulbound-bound: "<light_purple>Este ítem ahora está vinculado a ti."
+  recharged: "<green>Recargado: <white>%uses%/%max_uses%</white> usos."
+  craft-blocked: "<red>Ese ítem no puede usarse aquí."
+  drop-blocked: "<red>No puedes soltar este ítem."
+  # Mensajes por defecto de los activadores (cada activador puede sobrescribirlos en "messages:")
+  activator:
+    cooldown: "<red>Espera <white>%time%s</white> para volver a usarlo."
+    no-uses: "<red>Este ítem no tiene usos restantes."
+    not-owner: "<red>Este ítem está vinculado a <white>%owner%</white>."
+    item-broke: "<red>Tu <white>%item%</white> se ha agotado."
+    no-economy: "<red>La economía (Vault) no está disponible."
+    grapple-miss: "<gray>No hay nada a lo que engancharse."
+    no-bed: "<gray>No tienes cama; viajando al spawn."
+    no-item-permission: "<red>No tienes permiso para usar este ítem."
+    detect-ores: "<#FB923C>⛏ Minerales cercanos: <white>%list%"
+    detect-entities: "<#FB923C>👁 Entidades cercanas: <white>%list%"
+    detect-none: "<gray>No detectas nada en un radio de %radius% bloques."
+    no-blocks: "<red>No te quedan bloques de <white>%block%</white> en el inventario."
+    repaired: "<#FB923C>🔧 Reparados <white>%count%</white> ítems."
+  # Mensaje cuando falla una condición (se puede sobrescribir por condición)
+  conditions:
+    PERMISSION: "<red>No tienes permiso para usar esto."
+    WORLD: "<red>No puedes usar esto en este mundo."
+    MIN_HEALTH: "<red>Necesitas al menos <white>%value%</white> de vida."
+    MAX_HEALTH: "<red>Tienes demasiada vida para usar esto (máx. <white>%value%</white>)."
+    MIN_FOOD: "<red>Necesitas al menos <white>%value%</white> de hambre."
+    MAX_FOOD: "<red>Tienes demasiada hambre llena (máx. <white>%value%</white>)."
+    MIN_LEVEL: "<red>Necesitas nivel <white>%value%</white>."
+    MAX_LEVEL: "<red>Tu nivel es demasiado alto (máx. <white>%value%</white>)."
+    SNEAKING: "<red>Debes estar agachado."
+    SPRINTING: "<red>Debes estar corriendo."
+    FLYING: "<red>Debes estar volando."
+    GLIDING: "<red>Debes estar planeando con élitros."
+    ON_GROUND: "<red>Debes estar en el suelo."
+    IN_WATER: "<red>Debes estar en el agua."
+    GAMEMODE: "<red>No puedes usar esto en tu modo de juego."
+    TIME: "<red>No es el momento del día adecuado."
+    PLACEHOLDER: "<red>No cumples el requisito."
+    VARIABLE: "<red>Este ítem aún no cumple el requisito."
+    USES: "<red>Este ítem no tiene los usos necesarios."
+    TARGET_TYPE: "<red>No puedes usar esto sobre ese objetivo."
+    BLOCKING: "<red>Debes estar cubriéndote con el escudo."
+    BLOCK_TYPE: "<red>No puedes usar esto sobre ese bloque."
+    MONEY: "<red>Necesitas <white>$%value%</white>."
+    ITEM: "<red>Necesitas <white>%value%</white> en tu inventario."
+    XP_COST: "<red>Necesitas <white>%value%</white> niveles."
+    NEGATED: "<red>No puedes usar esto ahora mismo."

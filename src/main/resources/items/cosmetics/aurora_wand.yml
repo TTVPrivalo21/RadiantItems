@@ -1,0 +1,15 @@
+# Cosméticos · Varita de la Aurora: línea de partículas hacia donde miras.
+id: aurora_wand
+material: BLAZE_ROD
+name: "<gradient:#FB923C:#F97316><b>Varita de la Aurora</b></gradient>"
+lore:
+  - "<#FB923C>Clic derecho</#FB923C> <dark_gray>»</dark_gray> <white>rayo de luz decorativo"
+activators:
+  beam:
+    type: RIGHT_CLICK
+    cooldown: 1
+    cooldown-message: false
+    actions:
+      - "PARTICLE_LINE: DUST 16 0.3 #FB923C"
+      - "@block PARTICLE: FIREWORK 20 0.3 0.05"
+      - "SOUND: block.beacon.activate 0.4 2"

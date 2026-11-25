@@ -1,0 +1,21 @@
+# PvP · Kris del Asesino: solo contra jugadores y solo de noche.
+id: assassin_kris
+material: GOLDEN_SWORD
+name: "<gradient:#FB923C:#F97316><b>Kris del Asesino</b></gradient>"
+lore:
+  - "<white>Ciega y debilita a los jugadores."
+  - "<white>Solo funciona de noche."
+unbreakable: true
+flags: [HIDE_UNBREAKABLE]
+activators:
+  blind:
+    type: HIT_ENTITY
+    entities: PLAYER
+    cooldown: 6
+    cooldown-message: false
+    conditions:
+      - "TIME: NIGHT"
+    actions:
+      - "@target EFFECT: BLINDNESS 60 0"
+      - "@target EFFECT: WEAKNESS 100 0"
+      - "@target MESSAGE: <#F97316>Un kris te ha cegado..."

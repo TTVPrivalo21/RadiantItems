@@ -1,0 +1,15 @@
+# Lotería · Cofre Sorpresa: al colocarlo se abre en lugar de ponerse.
+id: surprise_chest
+material: CHEST
+name: "<gradient:#FB923C:#F97316><b>Cofre Sorpresa</b></gradient>"
+lore:
+  - "<white>Colócalo para descubrir su contenido."
+glow: true
+activators:
+  place:
+    type: BLOCK_PLACE
+    cancel-event: true
+    consume-item: true
+    actions:
+      - "@block FIREWORK: STAR #FB923C,#F97316 0 instant"
+      - "LOOT: 40=GIVE_ITEM: EXPERIENCE_BOTTLE 16 ;; 30=GIVE_ITEM: ENDER_PEARL 4 ;; 20=GIVE_ITEM: GOLDEN_APPLE 3 ;; 10=GIVE_ITEM: ri:surprise_chest 2 && MESSAGE: <#F97316>¡Más sorpresas dentro!"

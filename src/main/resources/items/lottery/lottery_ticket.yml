@@ -1,0 +1,22 @@
+# Lotería · Boleto: 1 de cada 10 gana (chance en el activador + mensaje al perder).
+id: lottery_ticket
+material: PAPER
+name: "<gradient:#FB923C:#F97316><b>Boleto de Lotería</b></gradient>"
+lore:
+  - "<white>10% de ganar <#F97316>5 esmeraldas</#F97316>."
+  - "<dark_gray>Se gasta al usarlo."
+activators:
+  play:
+    type: RIGHT_CLICK
+    consume-item: true
+    actions:
+      - "SOUND: block.note_block.pling 1 1"
+  prize:
+    type: RIGHT_CLICK
+    chance: 10
+    actions:
+      - "GIVE_ITEM: EMERALD 5"
+      - "TITLE: <#F97316>¡Premio! | <white>5 esmeraldas | 5 40 10"
+      - "SOUND: ui.toast.challenge_complete 1 1"
+    messages:
+      chance-failed: "<gray>No ha habido suerte esta vez..."

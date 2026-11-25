@@ -1,0 +1,27 @@
+# PvP · Daga de las Sombras: puñalada agachado e invisibilidad temporal.
+id: shadow_dagger
+material: IRON_SWORD
+name: "<gradient:#FB923C:#F97316><b>Daga de las Sombras</b></gradient>"
+lore:
+  - "<white>Agachado: <#F97316>+80%</#F97316> <white>de daño."
+  - "<#FB923C>Clic derecho</#FB923C> <dark_gray>»</dark_gray> <white>invisibilidad 6s (30s)"
+attributes:
+  - "ATTACK_DAMAGE: 5 mainhand"
+  - "ATTACK_SPEED: -1 mainhand"
+flags: [HIDE_ATTRIBUTES]
+activators:
+  backstab:
+    type: HIT_ENTITY
+    conditions:
+      - "SNEAKING"
+    actions:
+      - "@target DAMAGE: %damage% * 0.8"
+      - "@target PARTICLE: SMOKE 15 0.3 0.02"
+  vanish:
+    type: RIGHT_CLICK
+    cooldown: 30
+    actions:
+      - "EFFECT: INVISIBILITY 120 0 hide"
+      - "EFFECT: SPEED 120 1 hide"
+      - "PARTICLE: LARGE_SMOKE 30 0.5 0.02"
+      - "SOUND: entity.illusioner.cast_spell 1 0.8"

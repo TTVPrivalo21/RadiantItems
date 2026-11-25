@@ -1,0 +1,23 @@
+# Diversión · Lanzafuegos artificiales en la paleta naranja.
+id: firework_launcher
+material: FIREWORK_STAR
+name: "<gradient:#FB923C:#F97316><b>Lanzador de Fuegos</b></gradient>"
+lore:
+  - "<#FB923C>Clic derecho</#FB923C> <dark_gray>»</dark_gray> <white>fuego artificial"
+  - "<#FB923C>Shift + clic</#FB923C> <dark_gray>»</dark_gray> <white>traca de 3"
+activators:
+  single:
+    type: RIGHT_CLICK
+    cooldown: 1
+    cooldown-message: false
+    actions:
+      - "FIREWORK: BALL_LARGE #FB923C,#F97316,#FFFFFF 1"
+  barrage:
+    type: SHIFT_RIGHT_CLICK
+    cooldown: 6
+    actions:
+      - "FIREWORK: STAR #F97316 1"
+      - "DELAY: 8"
+      - "FIREWORK: BURST #FB923C 2"
+      - "DELAY: 8"
+      - "FIREWORK: CREEPER #F97316,#FB923C 2"

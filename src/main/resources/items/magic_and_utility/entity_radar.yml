@@ -1,0 +1,15 @@
+# Utilidad · Radar de Entidades: lista y hace brillar a los seres cercanos.
+id: entity_radar
+material: RECOVERY_COMPASS
+name: "<gradient:#FB923C:#F97316><b>Radar de Entidades</b></gradient>"
+lore:
+  - "<#FB923C>Clic derecho</#FB923C> <dark_gray>»</dark_gray> <white>revelar seres en 30 bloques"
+activators:
+  scan:
+    type: RIGHT_CLICK
+    cooldown: 15
+    actions:
+      - "DETECT: entities 30"
+      - "@nearby:30 EFFECT: GLOWING 100 0"
+      - "PARTICLE_CIRCLE: SCULK_SOUL 2 20"
+      - "SOUND: block.sculk_sensor.clicking 1 1"

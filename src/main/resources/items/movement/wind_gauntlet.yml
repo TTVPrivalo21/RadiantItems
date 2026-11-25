@@ -1,0 +1,13 @@
+# Movimiento · Guantelete del Viento: lanza cargas de viento.
+id: wind_gauntlet
+material: BREEZE_ROD
+name: "<gradient:#FB923C:#F97316><b>Guantelete del Viento</b></gradient>"
+lore:
+  - "<#FB923C>Clic derecho</#FB923C> <dark_gray>»</dark_gray> <white>carga de viento"
+activators:
+  charge:
+    type: RIGHT_CLICK
+    cooldown: 1.2
+    cooldown-message: false
+    actions:
+      - "PROJECTILE: WIND_CHARGE 1.4"

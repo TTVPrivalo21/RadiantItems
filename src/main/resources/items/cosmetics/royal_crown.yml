@@ -1,0 +1,16 @@
+# Cosméticos · Corona Real: equipable en la cabeza con aura dorada.
+id: royal_crown
+material: GOLDEN_HELMET
+name: "<gradient:#FB923C:#F97316><b>Corona Real</b></gradient>"
+lore:
+  - "<white>Equipada: aura dorada sobre tu cabeza."
+glow: true
+unbreakable: true
+flags: [HIDE_UNBREAKABLE, HIDE_ATTRIBUTES, HIDE_ENCHANTS]
+activators:
+  aura:
+    type: HOLD_LOOP
+    slot: ARMOR
+    interval: 20
+    actions:
+      - "PARTICLE: WAX_ON 3 0.3 0"

@@ -1,0 +1,44 @@
+# Magia · Báculo de Tormentas: rayos con cargas, meteoro y recarga con amatista.
+id: lightning_staff
+material: BLAZE_ROD
+name: "<gradient:#FB923C:#F97316><b>Báculo de Tormentas</b></gradient>"
+lore:
+  - "<#FB923C>Clic derecho</#FB923C> <dark_gray>»</dark_gray> <white>rayo donde miras"
+  - "<#FB923C>Shift + clic derecho</#FB923C> <dark_gray>»</dark_gray> <white>meteoro (2 cargas)"
+  - "<white>Cargas: <#F97316>%uses%</#F97316>/%max_uses%"
+  - "<white>Recarga: %cooldown%"
+  - "<dark_gray>Recárgalo con fragmentos de amatista."
+texture: lightning_staff
+model: handheld
+glow: true
+flags: [HIDE_ATTRIBUTES, HIDE_ENCHANTS]
+max-uses: 25
+break-on-empty: false
+recharge: { material: AMETHYST_SHARD, uses: 5 }
+activators:
+  lightning:
+    type: RIGHT_CLICK
+    cooldown: 2.5
+    consume-usage: 1
+    actions:
+      - "@block LIGHTNING"
+      - "PARTICLE_LINE: ELECTRIC_SPARK 40 0.6"
+      - "SOUND: entity.lightning_bolt.thunder 0.6 1.6"
+    messages:
+      mode: actionbar
+  meteor:
+    type: SHIFT_RIGHT_CLICK
+    cooldown: 8
+    consume-usage: 2
+    conditions:
+      - "MIN_LEVEL: 1 | <#F97316>Necesitas al menos 1 nivel para invocar un meteoro."
+    actions:
+      - "PROJECTILE: FIREBALL 1.2"
+      - "SOUND: entity.blaze.shoot 1 0.6"
+    messages:
+      mode: actionbar
+  impact:
+    type: PROJECTILE_HIT
+    actions:
+      - "@block EXPLOSION: 2.5"
+      - "@block PARTICLE: LAVA 25 1 0.2"

@@ -1,0 +1,17 @@
+# Cosméticos · Pantalones Ámbar: cuero teñido con estela de chispas.
+id: amber_leggings
+material: LEATHER_LEGGINGS
+name: "<gradient:#FB923C:#F97316><b>Pantalones Ámbar</b></gradient>"
+color: "#F97316"
+lore:
+  - "<white>Equipados: chispas al moverte corriendo."
+flags: [HIDE_DYE]
+activators:
+  sparks:
+    type: HOLD_LOOP
+    slot: ARMOR
+    interval: 10
+    conditions:
+      - "SPRINTING"
+    actions:
+      - "PARTICLE: ELECTRIC_SPARK 4 0.3 0.02"

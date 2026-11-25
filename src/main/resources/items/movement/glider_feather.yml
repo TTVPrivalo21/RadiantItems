@@ -1,0 +1,19 @@
+# Movimiento · Pluma de Planeo: caída lenta mientras la sostienes en el aire.
+id: glider_feather
+material: FEATHER
+name: "<gradient:#FB923C:#F97316><b>Pluma de Planeo</b></gradient>"
+lore:
+  - "<white>Sostenla en el aire para planear."
+glow: true
+max-stack: 1
+activators:
+  glide:
+    type: HOLD_LOOP
+    slot: HAND
+    interval: 10
+    conditions:
+      - "!ON_GROUND"
+      - "!SNEAKING"
+    actions:
+      - "EFFECT: SLOW_FALLING 30 0 hide"
+      - "PARTICLE: CLOUD 2 0.2 0"

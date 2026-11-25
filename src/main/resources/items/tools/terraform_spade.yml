@@ -1,0 +1,17 @@
+# Herramientas · Pala de Terraformar 5x5 con permiso propio.
+id: terraform_spade
+material: NETHERITE_SHOVEL
+name: "<gradient:#FB923C:#F97316><b>Pala de Terraformar</b></gradient>"
+permission: "radiantitems.use.terraform_spade"
+lore:
+  - "<white>Excava un área de <#F97316>5x5</#F97316>."
+  - "<dark_gray>Requiere radiantitems.use.terraform_spade"
+enchantments: { efficiency: 5 }
+flags: [HIDE_ENCHANTS]
+activators:
+  terraform:
+    type: BLOCK_BREAK
+    conditions:
+      - "!SNEAKING"
+    actions:
+      - "MINE_AREA: 2 0 true"

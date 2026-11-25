@@ -1,0 +1,15 @@
+# Herramientas · Pala Excavadora 3x3.
+id: excavator_shovel
+material: DIAMOND_SHOVEL
+name: "<gradient:#FB923C:#F97316><b>Pala Excavadora</b></gradient>"
+lore:
+  - "<white>Excava tierra, arena y grava en 3x3."
+enchantments: { efficiency: 3 }
+flags: [HIDE_ENCHANTS]
+activators:
+  dig:
+    type: BLOCK_BREAK
+    conditions:
+      - "!SNEAKING"
+    actions:
+      - "MINE_AREA: 1 0 true"

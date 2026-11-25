@@ -1,0 +1,13 @@
+# Diversión · Varita de Chispazos: rayo decorativo donde miras.
+id: zap_wand
+material: LIGHTNING_ROD
+name: "<gradient:#FB923C:#F97316><b>Varita de Chispazos</b></gradient>"
+lore:
+  - "<#FB923C>Clic derecho</#FB923C> <dark_gray>»</dark_gray> <white>rayo decorativo (sin daño)"
+activators:
+  zap:
+    type: RIGHT_CLICK
+    cooldown: 3
+    actions:
+      - "@block LIGHTNING effect"
+      - "@block PARTICLE: ELECTRIC_SPARK 25 0.5 0.2"

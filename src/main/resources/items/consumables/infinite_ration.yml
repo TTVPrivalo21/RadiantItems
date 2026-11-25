@@ -1,0 +1,16 @@
+# Consumibles · Ración Infinita: nunca se gasta.
+id: infinite_ration
+material: BREAD
+name: "<gradient:#FB923C:#F97316><b>Ración Infinita</b></gradient>"
+lore:
+  - "<white>Un pan que nunca se acaba."
+  - "<white>Recarga: %cooldown%"
+glow: true
+max-stack: 1
+activators:
+  eat:
+    type: CONSUME
+    cooldown: 20
+    actions:
+      - "FEED: 6 4"
+      - "SOUND: entity.generic.eat 1 1"

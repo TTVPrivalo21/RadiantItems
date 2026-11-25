@@ -1,0 +1,14 @@
+# Diversión · Lanzaconfeti de un solo uso.
+id: party_popper
+material: FIREWORK_ROCKET
+name: "<gradient:#FB923C:#F97316><b>Lanzaconfeti</b></gradient>"
+lore:
+  - "<#FB923C>Clic derecho</#FB923C> <dark_gray>»</dark_gray> <white>¡pum!"
+activators:
+  pop:
+    type: RIGHT_CLICK
+    consume-item: true
+    actions:
+      - "FIREWORK: BURST #FB923C,#F97316,#FFFFFF 0 instant"
+      - "PARTICLE: DUST 30 0.8 0 #FB923C 1.2"
+      - "SOUND: entity.firework_rocket.blast 1 1.2"

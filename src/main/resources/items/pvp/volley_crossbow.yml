@@ -1,0 +1,17 @@
+# PvP · Ballesta de Ráfaga: dispara flechas extra con DELAY.
+id: volley_crossbow
+material: CROSSBOW
+name: "<gradient:#FB923C:#F97316><b>Ballesta de Ráfaga</b></gradient>"
+lore:
+  - "<white>Cada disparo lanza 2 flechas extra."
+enchantments: { quick_charge: 2 }
+flags: [HIDE_ENCHANTS]
+activators:
+  volley:
+    type: SHOOT_BOW
+    actions:
+      - "DELAY: 3"
+      - "PROJECTILE: ARROW 2.5"
+      - "DELAY: 3"
+      - "PROJECTILE: ARROW 2.5"
+      - "SOUND: item.crossbow.shoot 0.8 1.4"

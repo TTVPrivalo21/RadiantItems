@@ -1,0 +1,23 @@
+# Consumibles · Tótem Guardián: con poca vida, te salva una vez cada 2 min.
+id: guardian_totem
+material: TOTEM_OF_UNDYING
+name: "<gradient:#FB923C:#F97316><b>Tótem Guardián</b></gradient>"
+lore:
+  - "<white>En la mano: si tu vida baja de 6,"
+  - "<white>te cura y protege (2 min)."
+  - "<white>Cargas: <#F97316>%uses%</#F97316>/%max_uses%"
+max-uses: 3
+activators:
+  save:
+    type: DAMAGED
+    slot: HAND
+    cooldown: 120
+    consume-usage: 1
+    conditions:
+      - "MAX_HEALTH: 6"
+    actions:
+      - "HEAL: 12"
+      - "EFFECT: RESISTANCE 100 2"
+      - "EFFECT: REGENERATION 100 1"
+      - "PARTICLE: TOTEM_OF_UNDYING 60 0.6 0.4"
+      - "SOUND: item.totem.use 0.8 1.2"

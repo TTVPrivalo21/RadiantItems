@@ -1,0 +1,14 @@
+# Cosméticos · Máscara de Creeper que sisea.
+id: creeper_mask
+material: CREEPER_HEAD
+name: "<gradient:#FB923C:#F97316><b>Máscara de Creeper</b></gradient>"
+lore:
+  - "<white>Equipada: agáchate para sisear."
+activators:
+  hiss:
+    type: SNEAK
+    slot: ARMOR
+    cooldown: 4
+    cooldown-message: false
+    actions:
+      - "@nearby:8 SOUND: entity.creeper.primed 0.8 1"

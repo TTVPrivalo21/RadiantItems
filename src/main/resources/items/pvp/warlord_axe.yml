@@ -1,0 +1,29 @@
+# PvP · Hacha pesada con atributos y golpe sísmico condicionado a la vida.
+id: warlord_axe
+material: NETHERITE_AXE
+name: "<gradient:#FB923C:#F97316><b>Hacha del Señor de la Guerra</b></gradient>"
+lore:
+  - "<white>Pesada y devastadora."
+  - "<#FB923C>Shift + clic derecho</#FB923C> <dark_gray>»</dark_gray> <white>golpe sísmico (15s)"
+  - "<dark_gray>Necesitas 10+ de vida y estar en el suelo."
+attributes:
+  - "ATTACK_DAMAGE: 13 mainhand"
+  - "ATTACK_SPEED: -3.2 mainhand"
+  - "MOVEMENT_SPEED: -0.1 mainhand MULTIPLY"
+flags: [HIDE_ATTRIBUTES]
+activators:
+  stagger:
+    type: HIT_ENTITY
+    actions:
+      - "@target EFFECT: SLOWNESS 40 2"
+  quake:
+    type: SHIFT_RIGHT_CLICK
+    cooldown: 15
+    conditions:
+      - "MIN_HEALTH: 10"
+      - "ON_GROUND"
+    actions:
+      - "@nearby:5 DAMAGE: 6"
+      - "@nearby:5 VELOCITY: 0 0.8 0"
+      - "PARTICLE: EXPLOSION 3 1.5 0"
+      - "SOUND: entity.generic.explode 0.8 0.6"

@@ -1,0 +1,18 @@
+# Movimiento · Perla Eterna: perla de ender reutilizable con cooldown.
+id: eternal_pearl
+material: ENDER_PEARL
+name: "<gradient:#FB923C:#F97316><b>Perla Eterna</b></gradient>"
+lore:
+  - "<white>Una perla que nunca se gasta."
+  - "<white>Recarga: %cooldown%"
+glow: true
+max-stack: 1
+activators:
+  throw:
+    type: RIGHT_CLICK
+    cooldown: 8
+    actions:
+      - "PROJECTILE: ENDER_PEARL 1.5"
+      - "SOUND: entity.ender_pearl.throw 1 0.9"
+    messages:
+      mode: actionbar

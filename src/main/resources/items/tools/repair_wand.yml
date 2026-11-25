@@ -1,0 +1,26 @@
+# Herramientas · Varita de Reparación: repara la mano secundaria o la armadura.
+id: repair_wand
+material: STICK
+name: "<gradient:#FB923C:#F97316><b>Varita de Reparación</b></gradient>"
+lore:
+  - "<#FB923C>Clic derecho</#FB923C> <dark_gray>»</dark_gray> <white>repara la mano secundaria"
+  - "<#FB923C>Shift + clic</#FB923C> <dark_gray>»</dark_gray> <white>repara toda la armadura"
+  - "<white>Cargas: <#F97316>%uses%</#F97316>/%max_uses%"
+max-uses: 20
+recharge: { material: IRON_INGOT, uses: 2 }
+glow: true
+activators:
+  fix_offhand:
+    type: RIGHT_CLICK
+    cooldown: 3
+    consume-usage: 1
+    actions:
+      - "REPAIR: 200 offhand"
+      - "SOUND: block.anvil.use 0.6 1.4"
+  fix_armor:
+    type: SHIFT_RIGHT_CLICK
+    cooldown: 10
+    consume-usage: 2
+    actions:
+      - "REPAIR: 150 armor"
+      - "SOUND: block.anvil.use 0.6 1.2"

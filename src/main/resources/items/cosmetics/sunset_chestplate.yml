@@ -1,0 +1,18 @@
+# Cosméticos · Peto del Ocaso: cuero teñido con aura de corazones.
+id: sunset_chestplate
+material: LEATHER_CHESTPLATE
+name: "<gradient:#FB923C:#F97316><b>Peto del Ocaso</b></gradient>"
+color: "#FB923C"
+lore:
+  - "<white>Equipado: aura de corazones al agacharte."
+flags: [HIDE_DYE]
+attributes:
+  - "ARMOR: 4 chest"
+activators:
+  hearts:
+    type: SNEAK
+    slot: ARMOR
+    cooldown: 2
+    cooldown-message: false
+    actions:
+      - "PARTICLE_CIRCLE: HEART 1 8"

@@ -1,0 +1,19 @@
+# Utilidad · Mesa de Trabajo Portátil.
+id: pocket_workbench
+material: CRAFTING_TABLE
+name: "<gradient:#FB923C:#F97316><b>Mesa de Trabajo Portátil</b></gradient>"
+lore:
+  - "<#FB923C>Clic derecho</#FB923C> <dark_gray>»</dark_gray> <white>abrir mesa de trabajo"
+  - "<#FB923C>Shift + clic</#FB923C> <dark_gray>»</dark_gray> <white>abrir cortapiedras"
+max-stack: 1
+activators:
+  craft:
+    type: RIGHT_CLICK
+    click: AIR
+    actions:
+      - "OPEN: workbench"
+  cutter:
+    type: SHIFT_RIGHT_CLICK
+    click: AIR
+    actions:
+      - "OPEN: stonecutter"

@@ -1,0 +1,13 @@
+# Lotería · Galleta de la Fortuna: mensaje y premio pequeño.
+id: fortune_cookie
+material: COOKIE
+name: "<gradient:#FB923C:#F97316><b>Galleta de la Fortuna</b></gradient>"
+lore:
+  - "<white>Cómela para descubrir tu fortuna."
+activators:
+  eat:
+    type: CONSUME
+    consume-item: true
+    actions:
+      - "FEED: 2 1"
+      - "LOOT: 40=MESSAGE: <#FB923C>«Hoy picarás diamantes.» ;; 30=MESSAGE: <#FB923C>«Un creeper te observa.» && GIVE_ITEM: GUNPOWDER 2 ;; 20=MESSAGE: <#FB923C>«El oro llama al oro.» && GIVE_ITEM: GOLD_NUGGET 9 ;; 10=MESSAGE: <#F97316>«La fortuna sonríe.» && GIVE_ITEM: EMERALD 3"

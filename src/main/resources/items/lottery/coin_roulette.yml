@@ -1,0 +1,23 @@
+# Lotería · Ruleta de Monedas: apuesta 8 pepitas de oro (coste de ítem).
+id: coin_roulette
+material: SUNFLOWER
+name: "<gradient:#FB923C:#F97316><b>Ruleta de Monedas</b></gradient>"
+lore:
+  - "<white>Apuesta <#F97316>8 pepitas de oro</#F97316> y gira."
+  - "<dark_gray>x0 · x1 · x2 · x5"
+glow: true
+max-stack: 1
+activators:
+  spin:
+    type: RIGHT_CLICK
+    cooldown: 3
+    conditions:
+      - "ITEM: GOLD_NUGGET 8 | <#F97316>Necesitas 8 pepitas de oro para apostar."
+    actions:
+      - "SOUND: block.note_block.hat 1 1.6"
+      - "DELAY: 5"
+      - "SOUND: block.note_block.hat 1 1.4"
+      - "DELAY: 5"
+      - "SOUND: block.note_block.hat 1 1.2"
+      - "DELAY: 10"
+      - "LOOT: 40=ACTIONBAR: <gray>x0: pierdes la apuesta ;; 35=GIVE_ITEM: GOLD_NUGGET 8 && ACTIONBAR: <white>x1: recuperas la apuesta ;; 20=GIVE_ITEM: GOLD_NUGGET 16 && ACTIONBAR: <#FB923C>x2: ¡16 pepitas! ;; 5=GIVE_ITEM: GOLD_NUGGET 40 && TITLE: <#F97316>¡x5! | <white>40 pepitas | 5 40 10"

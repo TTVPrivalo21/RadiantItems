@@ -1,0 +1,19 @@
+# PvP · Escudo Espejo: DAMAGED + BLOCKING devuelve parte del daño.
+id: mirror_shield
+material: SHIELD
+name: "<gradient:#FB923C:#F97316><b>Escudo Espejo</b></gradient>"
+lore:
+  - "<white>Mientras te cubres, devuelve el"
+  - "<#F97316>60%</#F97316> <white>del daño al atacante."
+unbreakable: true
+flags: [HIDE_UNBREAKABLE]
+activators:
+  reflect:
+    type: DAMAGED
+    slot: HAND
+    conditions:
+      - "BLOCKING"
+    actions:
+      - "@target DAMAGE: max(1, %damage% * 0.6)"
+      - "@target PARTICLE: ENCHANTED_HIT 15 0.4 0.1"
+      - "SOUND: item.shield.block 1 1.6"

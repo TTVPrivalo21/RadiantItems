@@ -1,0 +1,14 @@
+# Consumibles · Tónico de Miel: limpia efectos negativos.
+id: honey_tonic
+material: HONEY_BOTTLE
+name: "<gradient:#FB923C:#F97316><b>Tónico de Miel</b></gradient>"
+lore:
+  - "<white>Elimina todos los efectos y cura 3 corazones."
+activators:
+  drink:
+    type: CONSUME
+    consume-item: true
+    actions:
+      - "REMOVE_EFFECT: ALL"
+      - "HEAL: 6"
+      - "PARTICLE: WAX_ON 12 0.4 0"

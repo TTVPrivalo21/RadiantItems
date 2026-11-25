@@ -1,0 +1,32 @@
+# Utilidad · Reloj del Cielo: cambia TU hora y clima (no los del servidor).
+id: sky_clock
+material: CLOCK
+name: "<gradient:#FB923C:#F97316><b>Reloj del Cielo</b></gradient>"
+lore:
+  - "<#FB923C>Clic derecho</#FB923C> <dark_gray>»</dark_gray> <white>día"
+  - "<#FB923C>Clic izquierdo</#FB923C> <dark_gray>»</dark_gray> <white>noche"
+  - "<#FB923C>Shift + clic derecho</#FB923C> <dark_gray>»</dark_gray> <white>cielo despejado"
+  - "<#FB923C>Shift + clic izquierdo</#FB923C> <dark_gray>»</dark_gray> <white>volver a lo normal"
+glow: true
+activators:
+  day:
+    type: RIGHT_CLICK
+    actions:
+      - "PLAYER_TIME: day"
+      - "ACTIONBAR: <#FB923C>☀ Día (solo para ti)"
+  night:
+    type: LEFT_CLICK
+    actions:
+      - "PLAYER_TIME: night"
+      - "ACTIONBAR: <#F97316>☾ Noche (solo para ti)"
+  clear:
+    type: SHIFT_RIGHT_CLICK
+    actions:
+      - "PLAYER_WEATHER: clear"
+      - "ACTIONBAR: <#FB923C>Cielo despejado"
+  reset:
+    type: SHIFT_LEFT_CLICK
+    actions:
+      - "PLAYER_TIME: reset"
+      - "PLAYER_WEATHER: reset"
+      - "ACTIONBAR: <white>Cielo normal"

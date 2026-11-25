@@ -1,0 +1,16 @@
+# Consumibles · Elixir de Sombra: invisibilidad y visión nocturna.
+id: shadow_elixir
+material: POTION
+name: "<gradient:#FB923C:#F97316><b>Elixir de Sombra</b></gradient>"
+color: "#3a3a4a"
+lore:
+  - "<white>Invisibilidad y visión nocturna 60s."
+flags: [HIDE_ADDITIONAL_TOOLTIP]
+activators:
+  drink:
+    type: CONSUME
+    consume-item: true
+    actions:
+      - "EFFECT: INVISIBILITY 1200 0"
+      - "EFFECT: NIGHT_VISION 1200 0"
+      - "PARTICLE: LARGE_SMOKE 20 0.5 0.02"

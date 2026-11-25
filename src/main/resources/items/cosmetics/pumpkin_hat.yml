@@ -1,0 +1,13 @@
+# Cosméticos · Sombrero de Calabaza (calabaza tallada equipable).
+id: pumpkin_hat
+material: CARVED_PUMPKIN
+name: "<gradient:#FB923C:#F97316><b>Sombrero de Calabaza</b></gradient>"
+lore:
+  - "<#FB923C>Clic derecho</#FB923C> <dark_gray>»</dark_gray> <white>ponértelo"
+activators:
+  wear:
+    type: RIGHT_CLICK
+    click: AIR
+    actions:
+      - "WEAR"
+      - "PARTICLE: FLAME 8 0.3 0.02"

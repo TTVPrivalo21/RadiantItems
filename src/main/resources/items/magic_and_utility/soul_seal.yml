@@ -1,0 +1,20 @@
+# Magia · Sello del Alma: soulbound, se conserva al morir y protege a su dueño.
+id: soul_seal
+material: ECHO_SHARD
+name: "<gradient:#FB923C:#F97316><b>Sello del Alma</b></gradient>"
+lore:
+  - "<white>Se vincula al primer jugador que lo usa."
+  - "<white>Se conserva al morir y no se puede soltar."
+  - "<#FB923C>Clic derecho</#FB923C> <dark_gray>»</dark_gray> <white>escudo de alma (60s)"
+  - "<dark_gray>Dueño: %owner%"
+glow: true
+restrictions: { soulbound: true, keep-on-death: true, can-drop: false }
+activators:
+  ward:
+    type: RIGHT_CLICK
+    cooldown: 60
+    actions:
+      - "EFFECT: RESISTANCE 200 1"
+      - "EFFECT: ABSORPTION 200 1"
+      - "PARTICLE_SPIRAL: SOUL 0.8 2"
+      - "SOUND: block.respawn_anchor.charge 1 1.2"

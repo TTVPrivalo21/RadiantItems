@@ -1,0 +1,23 @@
+# Diversión · Bola de Disco: noche personal y notas musicales a tu alrededor.
+id: disco_ball
+material: AMETHYST_CLUSTER
+name: "<gradient:#FB923C:#F97316><b>Bola de Disco</b></gradient>"
+lore:
+  - "<#FB923C>Clic derecho</#FB923C> <dark_gray>»</dark_gray> <white>¡fiesta! (solo para ti)"
+  - "<#FB923C>Shift + clic</#FB923C> <dark_gray>»</dark_gray> <white>apagar"
+activators:
+  party:
+    type: RIGHT_CLICK
+    click: AIR
+    cooldown: 10
+    actions:
+      - "PLAYER_TIME: midnight"
+      - "PARTICLE_CIRCLE: NOTE 2 16"
+      - "PARTICLE_CIRCLE: DUST 3 24 #FB923C"
+      - "SOUND: block.note_block.pling 1 1.5"
+      - "DELAY: 200"
+      - "PLAYER_TIME: reset"
+  stop:
+    type: SHIFT_RIGHT_CLICK
+    actions:
+      - "PLAYER_TIME: reset"

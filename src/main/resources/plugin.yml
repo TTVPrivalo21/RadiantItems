@@ -1,0 +1,55 @@
+name: RadiantItems
+version: '${project.version}'
+main: dev.privalo.items.RadiantItems
+api-version: '1.21'
+description: '${project.description}'
+author: Privalo21
+website: https://github.com/Privalo21
+softdepend: [Vault, PlaceholderAPI]
+
+commands:
+  radiantitems:
+    description: Motor de ítems personalizados ejecutables de RadiantItems
+    usage: /<command> help
+    aliases: [ri, ritems]
+
+permissions:
+  radiantitems.admin:
+    description: Acceso completo a RadiantItems
+    default: op
+    children:
+      radiantitems.command.give: true
+      radiantitems.command.create: true
+      radiantitems.command.edit: true
+      radiantitems.command.list: true
+      radiantitems.command.info: true
+      radiantitems.command.setuses: true
+      radiantitems.command.pack: true
+      radiantitems.command.reload: true
+      radiantitems.command.delete: true
+      radiantitems.bypass.soulbound: true
+      radiantitems.bypass.permission: true
+  radiantitems.command.give:
+    default: op
+  radiantitems.command.create:
+    default: op
+  radiantitems.command.edit:
+    default: op
+  radiantitems.command.list:
+    default: op
+  radiantitems.command.info:
+    default: true
+  radiantitems.command.setuses:
+    default: op
+  radiantitems.command.pack:
+    default: true
+  radiantitems.command.reload:
+    default: op
+  radiantitems.command.delete:
+    default: op
+  radiantitems.bypass.permission:
+    description: Puede usar cualquier ítem aunque tenga "permission:" propio
+    default: op
+  radiantitems.bypass.soulbound:
+    description: Puede usar ítems vinculados (soulbound) de otros jugadores
+    default: false

@@ -1,0 +1,17 @@
+# Cosméticos · Botas de Estela Ígnea: estela de fuego al correr.
+id: flame_trail_boots
+material: LEATHER_BOOTS
+name: "<gradient:#FB923C:#F97316><b>Botas de Estela Ígnea</b></gradient>"
+color: "#F97316"
+lore:
+  - "<white>Equipadas: dejas una estela de llamas al correr."
+flags: [HIDE_DYE]
+activators:
+  trail:
+    type: HOLD_LOOP
+    slot: ARMOR
+    interval: 5
+    conditions:
+      - "SPRINTING"
+    actions:
+      - "PARTICLE_CIRCLE: FLAME 0.3 5"

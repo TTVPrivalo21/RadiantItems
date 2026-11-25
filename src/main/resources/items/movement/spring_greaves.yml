@@ -1,0 +1,18 @@
+# Movimiento · Grebas Resorte: cada salto te impulsa más alto.
+id: spring_greaves
+material: LEATHER_LEGGINGS
+name: "<gradient:#FB923C:#F97316><b>Grebas Resorte</b></gradient>"
+color: "#FB923C"
+lore:
+  - "<white>Equipadas: cada salto te impulsa"
+  - "<white>hacia arriba (cooldown 3s)."
+flags: [HIDE_DYE]
+activators:
+  spring:
+    type: JUMP
+    slot: ARMOR
+    cooldown: 3
+    actions:
+      - "VELOCITY: 0.4 0.9"
+      - "NO_FALL: 60"
+      - "SOUND: entity.slime.jump 0.8 1.2"

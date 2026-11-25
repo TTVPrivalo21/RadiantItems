@@ -1,0 +1,18 @@
+# PvP · Arco Rastreador: las flechas persiguen al objetivo (HOMING).
+id: seeker_bow
+material: BOW
+name: "<gradient:#FB923C:#F97316><b>Arco Rastreador</b></gradient>"
+lore:
+  - "<white>Las flechas persiguen al enemigo"
+  - "<white>más cercano durante 3 segundos."
+enchantments: { power: 2 }
+flags: [HIDE_ENCHANTS]
+glow: true
+activators:
+  seek:
+    type: SHOOT_BOW
+    cooldown: 1.5
+    cooldown-message: false
+    actions:
+      - "@target HOMING: 16 60"
+      - "SOUND: entity.illusioner.cast_spell 0.5 1.6"

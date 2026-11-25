@@ -1,0 +1,23 @@
+# PvP · Hacha del Verdugo: críticos por probabilidad y contador de ejecuciones de jugadores.
+id: executioner_axe
+material: IRON_AXE
+name: "<gradient:#FB923C:#F97316><b>Hacha del Verdugo</b></gradient>"
+lore:
+  - "<white>15% de asestar un golpe crítico brutal."
+  - "<white>Ejecuciones: <#F97316>%executions%"
+variables: { executions: 0 }
+activators:
+  critical:
+    type: HIT_ENTITY
+    chance: 15
+    actions:
+      - "@target DAMAGE: %damage% * 0.8"
+      - "@target PARTICLE: CRIT 25 0.4 0.3"
+      - "SOUND: entity.player.attack.crit 1 0.7"
+      - "ACTIONBAR: <#F97316>¡Golpe crítico!"
+  execution:
+    type: KILL_ENTITY
+    entities: PLAYER
+    actions:
+      - "VARIABLE: executions + 1"
+      - "BROADCAST: <#F97316>%player%</#F97316> <white>ha ejecutado a <#FB923C>%target%"

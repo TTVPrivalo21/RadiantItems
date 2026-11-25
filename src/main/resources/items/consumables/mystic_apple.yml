@@ -1,0 +1,18 @@
+# Consumibles · Manzana Mística: absorción y resistencia, con cooldown.
+id: mystic_apple
+material: GOLDEN_APPLE
+name: "<gradient:#FB923C:#F97316><b>Manzana Mística</b></gradient>"
+lore:
+  - "<white>Absorción III y Resistencia I."
+  - "<white>Recarga: %cooldown%"
+glow: true
+activators:
+  eat:
+    type: CONSUME
+    consume-item: true
+    cooldown: 45
+    actions:
+      - "FEED: 4 9"
+      - "EFFECT: ABSORPTION 1200 2"
+      - "EFFECT: RESISTANCE 400 0"
+      - "PARTICLE: TOTEM_OF_UNDYING 30 0.5 0.2"

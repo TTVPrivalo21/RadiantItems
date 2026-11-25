@@ -1,0 +1,18 @@
+# Herramientas · Hacha Talabosques: tala el árbol entero.
+id: timber_axe
+material: IRON_AXE
+name: "<gradient:#FB923C:#F97316><b>Hacha Talabosques</b></gradient>"
+lore:
+  - "<white>Rompe un tronco y cae el árbol entero."
+  - "<dark_gray>Agáchate para cortar solo un bloque."
+enchantments: { efficiency: 3 }
+flags: [HIDE_ENCHANTS]
+activators:
+  timber:
+    type: BLOCK_BREAK
+    conditions:
+      - "BLOCK_TYPE: *_LOG,*_STEM"
+      - "!SNEAKING"
+    actions:
+      - "VEIN_MINE: 64"
+      - "@block SOUND: block.wood.break 1 0.6"

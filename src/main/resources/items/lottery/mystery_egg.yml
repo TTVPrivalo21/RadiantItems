@@ -1,0 +1,13 @@
+# Lotería · Huevo Misterioso: efecto aleatorio, bueno o malo.
+id: mystery_egg
+material: EGG
+name: "<gradient:#FB923C:#F97316><b>Huevo Misterioso</b></gradient>"
+lore:
+  - "<white>¿Bendición o maldición?"
+activators:
+  crack:
+    type: RIGHT_CLICK
+    consume-item: true
+    actions:
+      - "LOOT: 30=EFFECT: SPEED 600 1 ;; 25=EFFECT: REGENERATION 200 1 ;; 20=EFFECT: JUMP_BOOST 600 2 ;; 15=EFFECT: NAUSEA 200 0 && MESSAGE: <gray>Puaj... ;; 10=EFFECT: LEVITATION 60 0 && MESSAGE: <#F97316>¡Arriba!"
+      - "SOUND: entity.turtle.egg_crack 1 1"

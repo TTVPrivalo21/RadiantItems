@@ -1,0 +1,18 @@
+# Movimiento · Sandalias del Sprint: velocidad al correr.
+id: sprint_sandals
+material: GOLDEN_BOOTS
+name: "<gradient:#FB923C:#F97316><b>Sandalias del Sprint</b></gradient>"
+lore:
+  - "<white>Equipadas: Velocidad II al correr."
+unbreakable: true
+flags: [HIDE_UNBREAKABLE]
+activators:
+  sprint:
+    type: HOLD_LOOP
+    slot: ARMOR
+    interval: 20
+    conditions:
+      - "SPRINTING"
+    actions:
+      - "EFFECT: SPEED 30 1 hide"
+      - "PARTICLE_CIRCLE: DUST 0.4 6 #FB923C"
