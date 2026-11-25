@@ -98,6 +98,16 @@ public class ValidateYaml {
         if (cfg.getBoolean("resource-pack.enabled", true)) {
             errors.add("config.yml: resource-pack.enabled debe ser false por defecto");
         }
+        String source = cfg.getString("update-checker.source", "");
+        if (!cfg.isConfigurationSection("update-checker")) {
+            errors.add("config.yml: falta la sección update-checker");
+        } else if (!source.equals("github") && !source.equals("spigot")) {
+            errors.add("config.yml: update-checker.source debe ser \"github\" o \"spigot\", no '" + source + "'");
+        } else if (!cfg.getString("update-checker.github-repo", "").matches("[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+")) {
+            errors.add("config.yml: update-checker.github-repo debe tener el formato usuario/repositorio");
+        } else if (!cfg.isInt("update-checker.spigot-resource-id") || cfg.getInt("update-checker.spigot-resource-id") < 0) {
+            errors.add("config.yml: update-checker.spigot-resource-id debe ser un entero >= 0");
+        }
         if (!cfg.isSet("items.generate-defaults")) {
             errors.add("config.yml: falta items.generate-defaults");
         }
@@ -129,6 +139,15 @@ public class ValidateYaml {
                     "break-on-empty", "recharge", "variables", "restrictions", "activators", "permission",
                     "no-permission-message").contains(key)) {
                 errors.add(label + ": clave desconocida '" + key + "'");
+            }
+        }
+        ConfigurationSection restrictions = s.getConfigurationSection("restrictions");
+        if (restrictions != null) {
+            for (String k : restrictions.getKeys(false)) {
+                if (!Set.of("can-craft", "can-smelt", "can-anvil", "can-drop", "can-store", "keep-on-death", "soulbound",
+                        "no-craft", "no-smelt", "no-anvil", "no-drop", "no-store").contains(k)) {
+                    errors.add(label + ": restricción desconocida '" + k + "'");
+                }
             }
         }
         ConfigurationSection acts = s.getConfigurationSection("activators");

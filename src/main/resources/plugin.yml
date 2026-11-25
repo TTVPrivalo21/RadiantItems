@@ -19,6 +19,9 @@ permissions:
     default: op
     children:
       radiantitems.command.give: true
+      radiantitems.command.givefolder: true
+      radiantitems.command.drop: true
+      radiantitems.command.show: true
       radiantitems.command.create: true
       radiantitems.command.edit: true
       radiantitems.command.list: true
@@ -30,6 +33,13 @@ permissions:
       radiantitems.bypass.soulbound: true
       radiantitems.bypass.permission: true
   radiantitems.command.give:
+    default: op
+  radiantitems.command.givefolder:
+    default: op
+  radiantitems.command.drop:
+    default: op
+  radiantitems.command.show:
+    description: Navegador visual /ri show (dar ítems requiere radiantitems.command.give)
     default: op
   radiantitems.command.create:
     default: op

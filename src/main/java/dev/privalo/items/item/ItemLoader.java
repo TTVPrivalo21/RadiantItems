@@ -105,10 +105,11 @@ public final class ItemLoader {
         }
         ConfigurationSection r = s.getConfigurationSection("restrictions");
         ConfigurationSection rs = r == null ? s : r;
-        def.canCraft = rs.getBoolean("can-craft", false);
-        def.canSmelt = rs.getBoolean("can-smelt", false);
-        def.canAnvil = rs.getBoolean("can-anvil", false);
-        def.canDrop = rs.getBoolean("can-drop", true);
+        def.canCraft = allowed(rs, "craft", false);
+        def.canSmelt = allowed(rs, "smelt", false);
+        def.canAnvil = allowed(rs, "anvil", false);
+        def.canDrop = allowed(rs, "drop", true);
+        def.canStore = allowed(rs, "store", true);
         def.keepOnDeath = rs.getBoolean("keep-on-death", false);
         def.soulbound = rs.getBoolean("soulbound", false);
 
@@ -194,6 +195,7 @@ public final class ItemLoader {
         r.set("can-smelt", def.canSmelt);
         r.set("can-anvil", def.canAnvil);
         r.set("can-drop", def.canDrop);
+        r.set("can-store", def.canStore);
         r.set("keep-on-death", def.keepOnDeath);
         r.set("soulbound", def.soulbound);
         ConfigurationSection acts = s.createSection("activators");
@@ -225,6 +227,14 @@ public final class ItemLoader {
             return Boolean.parseBoolean(value);
         }
         return value;
+    }
+
+    /** "can-X: true/false" or the inverse alias "no-X: true/false" (no-X wins when both are set). */
+    private static boolean allowed(ConfigurationSection s, String what, boolean fallback) {
+        if (s.isSet("no-" + what)) {
+            return !s.getBoolean("no-" + what);
+        }
+        return s.getBoolean("can-" + what, fallback);
     }
 
     /** Material#isItem needs the server registries on some versions; offline it is assumed true. */

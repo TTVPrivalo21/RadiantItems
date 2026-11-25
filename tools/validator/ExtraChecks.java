@@ -51,6 +51,20 @@ public class ExtraChecks {
             System.out.println((ok ? "OK  " : "ERR ") + "compare " + c[0] + " -> " + got);
             if (!ok) fails++;
         }
+        String[][] versions = {
+                {"v1.2.0", "1.1.0", ">"}, {"1.10.0", "1.9.9", ">"}, {"1.1.0", "v1.1.0", "="}, {"1.1", "1.1.0", "="},
+                {"1.2.0", "1.2.0-beta.1", ">"}, {"1.2.0-beta.2", "1.2.0-beta.10", "<"}, {"1.2.0-alpha", "1.2.0-beta", "<"},
+                {"V2.0.0+build.7", "1.99.0", ">"}, {"release-1.0.1", "1.0.0", ">"}, {"1.0.0", "1.0.1", "<"}};
+        for (String[] v : versions) {
+            int c = dev.privalo.items.update.Versions.compare(v[0], v[1]);
+            String got = c > 0 ? ">" : c < 0 ? "<" : "=";
+            boolean ok = got.equals(v[2]);
+            if (!ok) {
+                System.out.println("ERR version " + v[0] + " vs " + v[1] + " -> " + got + " (esperado " + v[2] + ")");
+                fails++;
+            }
+        }
+        System.out.println("OK  comparador de versiones (" + versions.length + " casos)");
         File data = new File(args[1]);
         PackBuilder builder = new PackBuilder(data, Logger.getLogger("test"));
         builder.ensureStructure();

@@ -209,6 +209,7 @@ public final class EditorMenu extends ItemMenu {
         toggle(31, Material.DROPPER, "Se puede soltar", d.canDrop, def -> def.canDrop = !def.canDrop);
         toggle(32, Material.TOTEM_OF_UNDYING, "Se conserva al morir", d.keepOnDeath, def -> def.keepOnDeath = !def.keepOnDeath);
         toggle(33, Material.ENDER_EYE, "Soulbound (vinculado)", d.soulbound, def -> def.soulbound = !def.soulbound);
+        toggle(36, Material.SHULKER_BOX, "Se puede guardar en cofres", d.canStore, def -> def.canStore = !def.canStore);
         button(34, icon(Material.AMETHYST_SHARD, "<gold>Recarga de usos",
                 "<gray>Material: <white>" + (d.rechargeMaterial == null ? "ninguno" : d.rechargeMaterial),
                 "<gray>Usos por unidad: <white>" + d.rechargeUses, "",

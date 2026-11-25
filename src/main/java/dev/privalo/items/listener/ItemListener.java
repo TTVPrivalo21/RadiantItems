@@ -114,6 +114,104 @@ public final class ItemListener implements Listener {
         }
     }
 
+    // ───────────────────────── no-store ─────────────────────────
+
+    /** Inventories that only process items (crafting, anvils...) are governed by the other restrictions. */
+    private static final java.util.Set<org.bukkit.event.inventory.InventoryType> NOT_STORAGE = java.util.EnumSet.of(
+            org.bukkit.event.inventory.InventoryType.CRAFTING, org.bukkit.event.inventory.InventoryType.PLAYER,
+            org.bukkit.event.inventory.InventoryType.CREATIVE, org.bukkit.event.inventory.InventoryType.WORKBENCH,
+            org.bukkit.event.inventory.InventoryType.ANVIL, org.bukkit.event.inventory.InventoryType.ENCHANTING,
+            org.bukkit.event.inventory.InventoryType.GRINDSTONE, org.bukkit.event.inventory.InventoryType.SMITHING,
+            org.bukkit.event.inventory.InventoryType.STONECUTTER, org.bukkit.event.inventory.InventoryType.LOOM,
+            org.bukkit.event.inventory.InventoryType.CARTOGRAPHY, org.bukkit.event.inventory.InventoryType.MERCHANT);
+
+    private boolean storeBlocked(ItemStack stack) {
+        CustomItem def = def(stack);
+        return def != null && !def.canStore;
+    }
+
+    /** no-store: the item can never be put into chests, barrels, shulkers, ender chests, hoppers... */
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    public void onStore(InventoryClickEvent event) {
+        Inventory top = event.getView().getTopInventory();
+        if (top.getHolder() instanceof dev.privalo.items.gui.Menu || NOT_STORAGE.contains(top.getType())
+                || !(event.getWhoClicked() instanceof Player player)) {
+            return;
+        }
+        boolean clickedTop = top.equals(event.getClickedInventory());
+        boolean blocked = false;
+        if (clickedTop && storeBlocked(event.getCursor())) {
+            blocked = true;
+        } else if (!clickedTop && event.isShiftClick() && storeBlocked(event.getCurrentItem())) {
+            blocked = true;
+        } else if (clickedTop && event.getClick() == org.bukkit.event.inventory.ClickType.NUMBER_KEY
+                && storeBlocked(player.getInventory().getItem(event.getHotbarButton()))) {
+            blocked = true;
+        } else if (clickedTop && event.getClick() == org.bukkit.event.inventory.ClickType.SWAP_OFFHAND
+                && storeBlocked(player.getInventory().getItemInOffHand())) {
+            blocked = true;
+        }
+        if (blocked) {
+            event.setCancelled(true);
+            plugin.messages().send(player, "store-blocked");
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    public void onStoreDrag(org.bukkit.event.inventory.InventoryDragEvent event) {
+        Inventory top = event.getView().getTopInventory();
+        if (top.getHolder() instanceof dev.privalo.items.gui.Menu || NOT_STORAGE.contains(top.getType()) || !storeBlocked(event.getOldCursor())) {
+            return;
+        }
+        for (int raw : event.getRawSlots()) {
+            if (raw < top.getSize()) {
+                event.setCancelled(true);
+                plugin.messages().send(event.getWhoClicked(), "store-blocked");
+                return;
+            }
+        }
+    }
+
+    /** Hoppers / hopper minecarts never swallow no-store or soulbound items lying on the ground. */
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    public void onHopperPickup(org.bukkit.event.inventory.InventoryPickupItemEvent event) {
+        CustomItem def = def(event.getItem().getItemStack());
+        if (def != null && (!def.canStore || def.soulbound)) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    public void onHopperMove(org.bukkit.event.inventory.InventoryMoveItemEvent event) {
+        if (storeBlocked(event.getItem())) {
+            event.setCancelled(true);
+        }
+    }
+
+    /** Soulbound items can only be picked up by their owner (or with the bypass permission). */
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+    public void onSoulboundPickup(org.bukkit.event.entity.EntityPickupItemEvent event) {
+        if (!(event.getEntity() instanceof Player player)) {
+            CustomItem def = def(event.getItem().getItemStack());
+            if (def != null && def.soulbound) {
+                event.setCancelled(true);
+            }
+            return;
+        }
+        ItemStack stack = event.getItem().getItemStack();
+        CustomItem def = def(stack);
+        if (def == null || !def.soulbound) {
+            return;
+        }
+        UUID owner = ItemData.owner(stack.getItemMeta().getPersistentDataContainer());
+        if (owner != null && !owner.equals(player.getUniqueId()) && !player.hasPermission("radiantitems.bypass.soulbound")) {
+            event.setCancelled(true);
+            if (plugin.pickupNotice(player.getUniqueId())) {
+                plugin.messages().send(player, "pickup-blocked", "owner", ItemData.ownerName(stack.getItemMeta().getPersistentDataContainer()));
+            }
+        }
+    }
+
     // ───────────────────────── recharge ─────────────────────────
 
     /** Clicking an item with its recharge material on the cursor refills uses. */
@@ -268,5 +366,6 @@ public final class ItemListener implements Listener {
         plugin.loop().forget(id);
         plugin.triggers().forget(id);
         plugin.chat().cancel(event.getPlayer());
+        plugin.forgetPickupNotice(id);
     }
 }

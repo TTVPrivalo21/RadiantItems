@@ -4,7 +4,11 @@ set -euo pipefail
 cd "$(dirname "$0")"
 
 NAME="RadiantItems"
-VERSION="$(sed -n '0,/<version>/s/.*<version>\([^<]*\)<\/version>.*/\1/p' pom.xml | head -1)"
+# Version read dynamically from pom.xml (first <version> after <artifactId>, i.e. the project's own);
+# plugin.yml gets it through ${project.version}. Override with VERSION=x.y.z ./build-local.sh
+VERSION="${VERSION:-$(awk '/<artifactId>/ {seen=1} seen && /<version>/ {gsub(/.*<version>|<\/version>.*/, ""); print; exit}' pom.xml)}"
+[ -n "$VERSION" ] || { echo "No se pudo leer la versión de pom.xml"; exit 1; }
+echo "RadiantItems ${VERSION}"
 DESCRIPTION="$(sed -n 's/.*<description>\([^<]*\)<\/description>.*/\1/p' pom.xml | head -1)"
 JAR_OUT="target/${NAME}-${VERSION}.jar"
 
@@ -68,6 +72,8 @@ cp -r src/main/resources/. "$BUILD/classes/"
 sed -i "s|\${project.version}|${VERSION}|g; s|\${project.description}|${DESCRIPTION}|g" "$BUILD/classes/plugin.yml"
 
 mkdir -p target
+# remove jars of other versions so only RadiantItems-$VERSION.jar is left to copy
+find target -maxdepth 1 -name "${NAME}-*.jar" ! -name "${NAME}-${VERSION}.jar" -delete
 rm -f "$JAR_OUT"
 "$JAR_TOOL" --create --file "$JAR_OUT" -C "$BUILD/classes" .
 echo "BUILD OK (javac) -> ${JAR_OUT} ($(du -k "$JAR_OUT" | cut -f1) KB)"

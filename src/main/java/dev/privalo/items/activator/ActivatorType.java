@@ -18,13 +18,15 @@ public enum ActivatorType {
     BLOCK_PLACE(Material.GRASS_BLOCK, false, false, false, "Colocar el ítem como bloque"),
     CONSUME(Material.COOKED_BEEF, false, false, true, "Comer / beber el ítem"),
     DROP_ITEM(Material.HOPPER, false, false, true, "Soltar el ítem (Q)"),
+    PICKUP_ITEM(Material.CHEST_MINECART, false, false, false, "Recoger el ítem del suelo"),
     SWAP_HANDS(Material.SHIELD, false, false, true, "Cambiar de mano (F)"),
     EQUIP(Material.LEATHER_CHESTPLATE, false, true, false, "Al equiparlo en la ranura indicada"),
     UNEQUIP(Material.CHAINMAIL_CHESTPLATE, false, true, false, "Al quitarlo de la ranura indicada"),
     HOLD_LOOP(Material.CLOCK, false, true, false, "Periódicamente mientras está en la ranura"),
     SNEAK(Material.LEATHER_BOOTS, false, false, false, "Al agacharse llevándolo en la ranura"),
     JUMP(Material.RABBIT_FOOT, false, false, false, "Al saltar llevándolo en la ranura"),
-    DAMAGED(Material.SHIELD, false, false, false, "Al recibir daño de una entidad (target = atacante)");
+    DAMAGED(Material.SHIELD, false, false, false, "Al recibir daño de una entidad (target = atacante)"),
+    DEATH(Material.WITHER_SKELETON_SKULL, false, false, false, "Al morir llevándolo en la ranura (target = asesino)");
 
     private final Material icon;
     private final boolean click;
@@ -54,7 +56,7 @@ public enum ActivatorType {
 
     /** Activators that look at hands + armour and honour the "slot" option. */
     public boolean slotted() {
-        return loop || this == SNEAK || this == JUMP || this == DAMAGED;
+        return loop || this == SNEAK || this == JUMP || this == DAMAGED || this == DEATH;
     }
 
     public boolean cancelByDefault() {
@@ -81,6 +83,8 @@ public enum ActivatorType {
             case "PLACE" -> BLOCK_PLACE;
             case "EAT", "DRINK" -> CONSUME;
             case "DROP" -> DROP_ITEM;
+            case "PICKUP", "PICK_UP", "PICKUP_ITEMS" -> PICKUP_ITEM;
+            case "DIE", "ON_DEATH", "PLAYER_DEATH" -> DEATH;
             case "SWAP", "SWAP_HAND", "OFFHAND_SWAP" -> SWAP_HANDS;
             case "HOLD", "LOOP", "PASSIVE", "HELD_LOOP" -> HOLD_LOOP;
             case "CROUCH", "SHIFT", "TOGGLE_SNEAK" -> SNEAK;

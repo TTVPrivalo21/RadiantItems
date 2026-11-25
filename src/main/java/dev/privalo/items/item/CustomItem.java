@@ -52,6 +52,8 @@ public final class CustomItem {
     public boolean canSmelt;
     public boolean canAnvil;
     public boolean canDrop = true;
+    /** false = cannot be put into chests, shulkers, hoppers... (no-store). */
+    public boolean canStore = true;
     public boolean keepOnDeath;
     public boolean soulbound;
 

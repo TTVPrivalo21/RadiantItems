@@ -18,3 +18,8 @@ activators:
       - "ACTIONBAR: <#F97316>¡Cara! <white>Suerte durante 30s"
     messages:
       chance-failed: "<gray>Cruz... inténtalo en 5 segundos."
+  found:
+    type: PICKUP_ITEM
+    actions:
+      - "ACTIONBAR: <#F97316>¡Has encontrado una moneda de la suerte!"
+      - "SOUND: entity.experience_orb.pickup 1 1.4"

@@ -13,6 +13,22 @@ items:
 permissions:
   bypass-item-permission: radiantitems.bypass.permission
 
+# ─────────────────────────────────────────────────────────────
+#  Update checker (asíncrono, timeout 5 s, nunca bloquea el servidor)
+#  Avisa en consola (y a los admins al entrar) si hay una versión
+#  más nueva. Sin conexión, repo privado o sin releases → se ignora.
+# ─────────────────────────────────────────────────────────────
+update-checker:
+  enabled: true
+  # "github" (GitHub Releases) o "spigot" (SpigotMC vía api.spiget.org)
+  source: "github"
+  # usuario/repositorio de GitHub: se lee tag_name y html_url de releases/latest
+  github-repo: "TTVPrivalo21/RadiantItems"
+  # ID numérico del recurso en SpigotMC (el número al final de su URL). 0 = desactivado
+  spigot-resource-id: 0
+  # Mensaje clicable a los jugadores con radiantitems.admin al conectarse
+  notify-admins-on-join: true
+
 # Recarga automática: si cambias un archivo de items/ o textures/ se recarga solo.
 auto-reload:
   enabled: true
@@ -100,6 +116,14 @@ messages:
   invalid-id: "<red>Id inválido: usa solo minúsculas, números, '_' o '-'."
   given: "<green>Diste <white>%amount%x %item%</white> a <white>%player%</white>."
   received: "<green>Recibiste <white>%amount%x %item%</white>."
+  given-folder: "<#FB923C>Diste <white>%count%</white> ítems (x%amount%) de <white>%folder%</white> a <white>%player%</white>.<gray> Soltados al suelo: %dropped%"
+  received-folder: "<#FB923C>Recibiste <white>%count%</white> ítems de la carpeta <white>%folder%</white>."
+  unknown-folder: "<red>La carpeta <white>%folder%</white> no existe o está vacía. Carpetas: <white>%folders%"
+  unknown-world: "<red>El mundo <white>%world%</white> no existe."
+  dropped: "<#FB923C>Soltados <white>%amount%x %item%</white> en <white>%world% %x% %y% %z%</white>."
+  store-blocked: "<red>Este ítem no se puede guardar en contenedores."
+  pickup-blocked: "<red>Este ítem está vinculado a <white>%owner%</white>."
+  update-available: "<#FB923C>⬆ Nueva versión de RadiantItems: <white>%installed%</white> <dark_gray>→</dark_gray> <#F97316><b>%latest%</b></#F97316> <dark_gray>(%source%)</dark_gray> <click:open_url:'%url%'><hover:show_text:'<#FB923C>Abrir %url%'><#F97316><u>[Descargar]</u></#F97316></hover></click>"
   list-header: "<#FB923C>Ítems cargados (<white>%count%</white>)<gray>%filter%<#FB923C>:"
   list-category: "<#F97316>▸ %category% <dark_gray>(%count%)"
   list-categories: "<gray>Categorías: <white>%categories%"

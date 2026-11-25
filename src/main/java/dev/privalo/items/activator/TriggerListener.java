@@ -337,6 +337,29 @@ public final class TriggerListener implements Listener {
         }
     }
 
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    public void onPickup(org.bukkit.event.entity.EntityPickupItemEvent event) {
+        if (!(event.getEntity() instanceof Player player) || ItemData.id(event.getItem().getItemStack()) == null) {
+            return;
+        }
+        ItemRef ref = ItemRef.dropped(player, event.getItem());
+        if (engine().fire(ActivatorType.PICKUP_ITEM, player, ref, ctx -> ctx.event(event), null)) {
+            event.setCancelled(true);
+        }
+    }
+
+    /** DEATH runs before drops are processed; the killer (if any) is the target. */
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onDeath(org.bukkit.event.entity.PlayerDeathEvent event) {
+        Player player = event.getEntity();
+        Entity killer = player.getKiller();
+        if (killer == null && player.getLastDamageCause() instanceof EntityDamageByEntityEvent by) {
+            killer = by.getDamager() instanceof Projectile pr && pr.getShooter() instanceof Entity shooter ? shooter : by.getDamager();
+        }
+        Entity source = killer;
+        fireEquipped(ActivatorType.DEATH, player, ctx -> ctx.target(source).event(event));
+    }
+
     public void forget(UUID player) {
         String prefix = player.toString();
         lastClick.keySet().removeIf(k -> k.startsWith(prefix));

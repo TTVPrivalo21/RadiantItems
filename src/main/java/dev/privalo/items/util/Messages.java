@@ -21,7 +21,10 @@ public final class Messages {
         if (section == null) {
             return key;
         }
-        return section.getString(key, key);
+        // getString(path) also looks at the jar's config.yml defaults, so messages added in a new
+        // version work even when the server keeps an older config.yml
+        String value = section.getString(key);
+        return value == null ? key : value;
     }
 
     public String rawOrNull(String key) {

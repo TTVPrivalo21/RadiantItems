@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 /** /radiantitems (/ri): give, create, edit, list, info, setuses, pack, reload, delete. */
 public final class ItemsCommand implements TabExecutor {
 
-    private static final List<String> SUBS = List.of("give", "create", "edit", "list", "info", "setuses", "pack", "reload", "delete", "help");
+    private static final List<String> SUBS = List.of("give", "givefolder", "drop", "show", "browser", "create", "edit", "list", "info", "setuses", "pack", "reload", "delete", "help");
 
     private final RadiantItems plugin;
 
@@ -50,6 +50,9 @@ public final class ItemsCommand implements TabExecutor {
         String sub = args.length == 0 ? "help" : args[0].toLowerCase(Locale.ROOT);
         switch (sub) {
             case "give" -> give(sender, label, args);
+            case "givefolder" -> giveFolder(sender, label, args);
+            case "drop" -> drop(sender, label, args);
+            case "show", "browser" -> show(sender, args);
             case "create" -> create(sender, label, args);
             case "edit" -> edit(sender, label, args);
             case "list" -> list(sender, args);
@@ -73,6 +76,9 @@ public final class ItemsCommand implements TabExecutor {
         String[] lines = {
                 "<gradient:#ffd36e:#ff8a3d><b>RadiantItems</b></gradient> <gray>v" + plugin.getPluginMeta().getVersion(),
                 "<yellow>" + l + " give <jugador> <item> [cantidad]</yellow> <gray>dar un ítem",
+                "<yellow>" + l + " givefolder <jugador> <carpeta> [cantidad]</yellow> <gray>dar todos los ítems de una carpeta",
+                "<yellow>" + l + " drop <id> <mundo> <x> <y> <z> [cantidad]</yellow> <gray>soltar el ítem en el suelo",
+                "<yellow>" + l + " show [carpeta]</yellow> <gray>navegador visual de ítems (alias browser)",
                 "<yellow>" + l + " create <id> [carpeta]</yellow> <gray>crear (en items/<carpeta>/) y abrir el editor",
                 "<yellow>" + l + " edit <id></yellow> <gray>abrir el editor visual",
                 "<yellow>" + l + " list [carpeta]</yellow> <gray>ítems cargados, agrupados por carpeta",
@@ -315,6 +321,118 @@ public final class ItemsCommand implements TabExecutor {
         }
     }
 
+    /** "browser" shares the permission of "show". */
+    private static String permissionOf(String sub) {
+        return sub.equals("browser") ? "show" : sub;
+    }
+
+    private void giveFolder(CommandSender sender, String label, String[] args) {
+        if (!allowed(sender, "givefolder")) {
+            return;
+        }
+        if (args.length < 3) {
+            sender.sendMessage(Text.parse("<red>Uso: /" + label + " givefolder <jugador> <carpeta> [cantidad]"));
+            return;
+        }
+        Player target = Bukkit.getPlayerExact(args[1]);
+        if (target == null) {
+            plugin.messages().send(sender, "player-not-found", "player", args[1]);
+            return;
+        }
+        String folder = dev.privalo.items.item.ItemRegistry.cleanCategory(args[2]);
+        List<CustomItem> defs = folder.isEmpty() ? List.of() : plugin.items().inCategory(folder);
+        if (defs.isEmpty()) {
+            plugin.messages().send(sender, "unknown-folder", "folder", args[2], "folders", String.join(", ", plugin.items().categories()));
+            return;
+        }
+        int amount = 1;
+        if (args.length > 3) {
+            if (!Expr.isNumeric(args[3])) {
+                plugin.messages().send(sender, "invalid-number", "value", args[3]);
+                return;
+            }
+            amount = (int) Math.max(1, Math.min(64, Expr.eval(args[3])));
+        }
+        List<ItemStack> stacks = new ArrayList<>();
+        for (CustomItem def : defs) {
+            stacks.addAll(plugin.giveStacks(def, amount));
+        }
+        int dropped = 0;
+        for (ItemStack overflow : target.getInventory().addItem(stacks.toArray(new ItemStack[0])).values()) {
+            target.getWorld().dropItemNaturally(target.getLocation(), overflow);
+            dropped++;
+        }
+        plugin.messages().send(sender, "given-folder", "count", String.valueOf(defs.size()), "amount", String.valueOf(amount),
+                "folder", folder, "player", target.getName(), "dropped", String.valueOf(dropped));
+        if (target != sender) {
+            plugin.messages().send(target, "received-folder", "count", String.valueOf(defs.size()), "folder", folder);
+        }
+    }
+
+    private void drop(CommandSender sender, String label, String[] args) {
+        if (!allowed(sender, "drop")) {
+            return;
+        }
+        if (args.length < 6) {
+            sender.sendMessage(Text.parse("<red>Uso: /" + label + " drop <id> <mundo> <x> <y> <z> [cantidad]"));
+            return;
+        }
+        CustomItem def = plugin.items().get(args[1]);
+        if (def == null) {
+            plugin.messages().send(sender, "unknown-item", "id", args[1]);
+            return;
+        }
+        org.bukkit.World world = Bukkit.getWorld(args[2]);
+        if (world == null) {
+            plugin.messages().send(sender, "unknown-world", "world", args[2]);
+            return;
+        }
+        org.bukkit.Location base = sender instanceof Player p && p.getWorld().equals(world) ? p.getLocation() : world.getSpawnLocation();
+        double[] xyz = new double[3];
+        for (int i = 0; i < 3; i++) {
+            String raw = args[3 + i];
+            double origin = i == 0 ? base.getX() : i == 1 ? base.getY() : base.getZ();
+            boolean relative = raw.startsWith("~");
+            String expr = relative ? (raw.length() > 1 ? raw.substring(1) : "0") : raw;
+            if (!Expr.isNumeric(expr)) {
+                plugin.messages().send(sender, "invalid-number", "value", raw);
+                return;
+            }
+            xyz[i] = (relative ? origin : 0) + Expr.eval(expr);
+        }
+        int amount = 1;
+        if (args.length > 6) {
+            if (!Expr.isNumeric(args[6])) {
+                plugin.messages().send(sender, "invalid-number", "value", args[6]);
+                return;
+            }
+            amount = (int) Math.max(1, Math.min(2304, Expr.eval(args[6])));
+        }
+        org.bukkit.Location at = new org.bukkit.Location(world, xyz[0], xyz[1], xyz[2]);
+        world.getChunkAt(at).load(true);
+        for (ItemStack stack : plugin.giveStacks(def, amount)) {
+            world.dropItem(at, stack);
+        }
+        plugin.messages().send(sender, "dropped", "amount", String.valueOf(amount), "item", Text.plain(def.displayName()),
+                "world", world.getName(), "x", Expr.format(xyz[0]), "y", Expr.format(xyz[1]), "z", Expr.format(xyz[2]));
+    }
+
+    private void show(CommandSender sender, String[] args) {
+        if (!allowed(sender, "show")) {
+            return;
+        }
+        if (!(sender instanceof Player player)) {
+            plugin.messages().send(sender, "player-only");
+            return;
+        }
+        String folder = args.length > 1 ? dev.privalo.items.item.ItemRegistry.cleanCategory(args[1]) : "";
+        if (!folder.isEmpty() && plugin.items().inCategory(folder).isEmpty()) {
+            plugin.messages().send(sender, "unknown-folder", "folder", args[1], "folders", String.join(", ", plugin.items().categories()));
+            return;
+        }
+        new dev.privalo.items.gui.BrowserMenu(plugin, player, folder).open();
+    }
+
     private void delete(CommandSender sender, String label, String[] args) {
         if (!allowed(sender, "delete")) {
             return;
@@ -339,7 +457,7 @@ public final class ItemsCommand implements TabExecutor {
         List<String> options = new ArrayList<>();
         if (args.length == 1) {
             for (String sub : SUBS) {
-                if (sub.equals("help") || sender.hasPermission("radiantitems.command." + sub) || sender.hasPermission("radiantitems.admin")) {
+                if (sub.equals("help") || sender.hasPermission("radiantitems.command." + permissionOf(sub)) || sender.hasPermission("radiantitems.admin")) {
                     options.add(sub);
                 }
             }
@@ -353,6 +471,35 @@ public final class ItemsCommand implements TabExecutor {
                         options.addAll(plugin.items().ids());
                     } else if (args.length == 4) {
                         options.addAll(List.of("1", "16", "64"));
+                    }
+                }
+                case "givefolder" -> {
+                    if (args.length == 2) {
+                        Bukkit.getOnlinePlayers().forEach(p -> options.add(p.getName()));
+                    } else if (args.length == 3) {
+                        options.addAll(plugin.items().categories());
+                    } else if (args.length == 4) {
+                        options.addAll(List.of("1", "16", "64"));
+                    }
+                }
+                case "drop" -> {
+                    if (args.length == 2) {
+                        options.addAll(plugin.items().ids());
+                    } else if (args.length == 3) {
+                        Bukkit.getWorlds().forEach(w -> options.add(w.getName()));
+                    } else if (args.length >= 4 && args.length <= 6) {
+                        options.add("~");
+                        if (sender instanceof Player p) {
+                            org.bukkit.Location l = p.getLocation();
+                            options.add(String.valueOf(args.length == 4 ? l.getBlockX() : args.length == 5 ? l.getBlockY() : l.getBlockZ()));
+                        }
+                    } else if (args.length == 7) {
+                        options.addAll(List.of("1", "16", "64"));
+                    }
+                }
+                case "show", "browser" -> {
+                    if (args.length == 2) {
+                        options.addAll(plugin.items().categories());
                     }
                 }
                 case "list" -> {

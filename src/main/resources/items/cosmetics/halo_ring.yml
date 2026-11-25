@@ -13,3 +13,9 @@ activators:
     interval: 10
     actions:
       - "PARTICLE: END_ROD 2 0.25 0"
+  fade:
+    type: DROP_ITEM
+    cancel-event: false
+    actions:
+      - "ACTIONBAR: <gray>La aureola se apaga al tocar el suelo..."
+      - "PARTICLE: END_ROD 10 0.3 0.02"

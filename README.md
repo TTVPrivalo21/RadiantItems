@@ -22,7 +22,8 @@ plugins/RadiantItems/
 ├─ items/              catálogo de 100 ítems en 8 carpetas (se leen TODAS las subcarpetas)
 │  ├─ pvp/ tools/ movement/ consumables/
 │  └─ lottery/ cosmetics/ fun/ magic_and_utility/
-└─ .secret             clave HMAC con la que se firman los ítems (no la borres)
+├─ .secret             clave HMAC con la que se firman los ítems (no la borres)
+└─ .last-version       última versión ejecutada (aviso de actualización en consola)
 ```
 
 `items.generate-defaults: true` extrae el catálogo solo si `items/` no contiene ningún `.yml`.
@@ -49,6 +50,9 @@ con SHA-1 determinista y asigna `item_model` a los ítems con `texture:`. Al act
 | Comando | Permiso | Descripción |
 |---|---|---|
 | `/ri give <jugador> <item> [cantidad]` | `radiantitems.command.give` | Da ítems |
+| `/ri givefolder <jugador> <carpeta> [cantidad]` | `radiantitems.command.givefolder` | Da todos los ítems de una carpeta (y sus subcarpetas) |
+| `/ri drop <id> <mundo> <x> <y> <z> [cantidad]` | `radiantitems.command.drop` | Suelta el ítem en el suelo (admite `~` relativo; funciona desde consola) |
+| `/ri show [carpeta]` · `/ri browser` | `radiantitems.command.show` | Navegador GUI por carpetas: clic = 1, shift = pila (requiere `give`), clic derecho = editar |
 | `/ri create <id> [carpeta]` | `radiantitems.command.create` | Crea en `items/<carpeta>/` y abre el editor |
 | `/ri edit [id]` | `radiantitems.command.edit` | Editor GUI (sin id: el de tu mano) |
 | `/ri list [carpeta]` | `radiantitems.command.list` | Lista agrupada por carpeta, filtrable |
@@ -83,7 +87,7 @@ max-uses: 20
 break-on-empty: true
 recharge: { material: AMETHYST_SHARD, uses: 5 }
 variables: { kills: 0 }
-restrictions: { can-craft: false, can-smelt: false, can-anvil: false, can-drop: true, keep-on-death: false, soulbound: false }
+restrictions: { no-craft: true, no-anvil: true, no-store: false, keep-on-death: false, soulbound: false }
 texture: mi_espada                  # OPCIONAL: solo con resource-pack.enabled: true
 activators:
   golpe:
@@ -96,9 +100,34 @@ activators:
 ### Activadores
 
 `RIGHT_CLICK`, `LEFT_CLICK`, `SHIFT_RIGHT_CLICK`, `SHIFT_LEFT_CLICK`, `HIT_ENTITY`, `KILL_ENTITY`,
-`PROJECTILE_HIT`, `SHOOT_BOW`, `BLOCK_BREAK`, `BLOCK_PLACE`, `CONSUME`, `DROP_ITEM`, `SWAP_HANDS`,
-`EQUIP`, `UNEQUIP`, `HOLD_LOOP`, y con ranura (`slot: MAIN_HAND|OFF_HAND|HAND|ARMOR|ANY`):
-`SNEAK` (al agacharse), `JUMP` (al saltar) y `DAMAGED` (al recibir daño; `@target` = atacante).
+`PROJECTILE_HIT`, `SHOOT_BOW`, `BLOCK_BREAK`, `BLOCK_PLACE`, `CONSUME`, `SWAP_HANDS`,
+`DROP_ITEM` (al soltarlo con Q; `cancel-event: false` deja que caiga), `PICKUP_ITEM` (al recogerlo del suelo;
+`cancel-event: true` impide recogerlo) y, con ranura (`slot: MAIN_HAND|OFF_HAND|HAND|ARMOR|ANY`, que mira manos y armadura):
+
+| Activador | Cuándo |
+|---|---|
+| `EQUIP` / `UNEQUIP` | al ponerlo / quitarlo de la ranura |
+| `HOLD_LOOP` | cada `interval` ticks mientras está en la ranura |
+| `SNEAK` / `JUMP` | al agacharse / saltar |
+| `DAMAGED` | al recibir daño de una entidad (`@target` = atacante) |
+| `DEATH` | al morir llevándolo en la ranura (`@target` = asesino, si lo hay) |
+
+### Restricciones
+
+```yaml
+restrictions:
+  soulbound: true      # se vincula al primer usuario; otros no pueden usarlo ni recogerlo; se conserva al morir
+  keep-on-death: true  # vuelve al inventario al reaparecer
+  no-drop: true        # = can-drop: false  → no se puede soltar con Q
+  no-craft: true       # = can-craft: false → no sirve como ingrediente (mesa y herrería)
+  no-anvil: true       # = can-anvil: false → no se puede usar en yunques
+  no-smelt: true       # = can-smelt: false → ni fundir ni como combustible
+  no-store: true       # = can-store: false → no entra en cofres, barriles, shulkers, cofre de ender, tolvas...
+```
+
+Se aceptan las dos formas (`no-X` o `can-X`); el editor guarda `can-X`. Por defecto: `can-craft`,
+`can-smelt` y `can-anvil` desactivados; `can-drop` y `can-store` activados. Las tolvas nunca recogen
+del suelo ítems `no-store` ni `soulbound`.
 
 ### Condiciones
 
@@ -143,6 +172,76 @@ Selector opcional: `@self`, `@target`, `@nearby:R`, `@block`, `@online`. Los nú
 encantamientos, flags, atributos, usos, recarga, variables, restricciones, **permiso del ítem**,
 **carpeta/categoría** (mueve el archivo), textura opcional y todos los activadores (condiciones,
 acciones y mensajes con validación). Cada cambio se guarda al instante en su archivo original.
+
+## Comprobador de actualizaciones
+
+Al arrancar (y con `/ri reload`) RadiantItems consulta en segundo plano si hay una versión más nueva.
+Usa `java.net.http.HttpClient` fuera del hilo principal, con timeout de 5 s y cabecera `User-Agent`, así
+que nunca afecta al TPS. Si no hay conexión, el repo es privado, todavía no tiene releases (HTTP 404) o la
+respuesta no es válida, se ignora sin mensajes ni stacktraces (solo queda una línea en nivel `FINE`).
+
+```yaml
+update-checker:
+  enabled: true
+  source: "github"                        # "github" o "spigot"
+  github-repo: "TTVPrivalo21/RadiantItems" # usuario/repositorio de GitHub
+  spigot-resource-id: 0                   # ID del recurso en SpigotMC (0 = sin usar)
+  notify-admins-on-join: true             # aviso clicable a quien tenga radiantitems.admin
+```
+
+**Con GitHub** (`source: "github"`): pon `usuario/repositorio`. Se consulta
+`https://api.github.com/repos/<repo>/releases/latest` y se leen `tag_name` (por ejemplo `v1.2.0`) y `html_url`.
+Para que avise, publica una *Release* (no basta con un tag ni con un pre-release o borrador) cuyo tag sea mayor
+que la versión instalada. El prefijo `v` es opcional.
+
+**Con SpigotMC** (`source: "spigot"`): pon el ID numérico del recurso, que es el número final de su URL.
+Por ejemplo, en `https://www.spigotmc.org/resources/radiantitems.123456/` el ID es `123456`.
+Se consulta `https://api.spiget.org/v2/resources/<id>/versions/latest` (campo `name`) y el enlace de descarga
+es `https://www.spigotmc.org/resources/<id>/`. La página de autor
+(`spigotmc.org/resources/authors/...`) no sirve: hace falta el ID del recurso.
+
+Las versiones se comparan como SemVer: `v1.2.0` → `1.2.0`, `1.10.0 > 1.9.9`, `1.2.0 > 1.2.0-beta.1`
+y se ignoran los metadatos `+build`. Si la remota es mayor, la consola muestra:
+
+```
+============================================================
+ ¡Hay una nueva versión de RadiantItems disponible! (GitHub)
+   Versión instalada : 1.1.0
+   Nueva versión     : 1.2.0
+   Descarga          : https://github.com/TTVPrivalo21/RadiantItems/releases/tag/v1.2.0
+============================================================
+```
+
+Los admins que entren reciben el mensaje `messages.update-available`, con un `[Descargar]` clicable
+en la paleta `#FB923C` / `#F97316`.
+
+## Control de versión
+
+La versión vive solo en `pom.xml` (`1.1.0`); `plugin.yml` la recibe con `${project.version}` y
+`build-local.sh` la lee dinámicamente para generar `target/RadiantItems-<versión>.jar` (borra los jars de
+otras versiones; `VERSION=x.y.z ./build-local.sh` la sobrescribe).
+
+Al arrancar, el plugin compara la versión del jar con `plugins/RadiantItems/.last-version`. Si cambia,
+imprime en consola un aviso del tipo:
+
+```
+============================================================
+ RadiantItems ACTUALIZACIÓN detectada: 1.0.0 -> 1.1.0
+ Revisa el README (novedades). Las claves nuevas de config.yml
+ usan su valor por defecto hasta que las añadas a tu config.yml.
+============================================================
+```
+
+(o `DOWNGRADE` si la versión baja) y solo después reescribe `.last-version`.
+
+### Novedades 1.1.0
+
+- Comandos `/ri givefolder`, `/ri drop` y navegador `/ri show` (`/ri browser`).
+- Activadores `PICKUP_ITEM` y `DEATH`; restricción `no-store` y alias `no-*` para todas las restricciones.
+- Los ítems soulbound no pueden recogerlos otros jugadores ni las tolvas.
+- Comprobador de actualizaciones asíncrono (GitHub Releases / SpigotMC) con aviso clicable a admins.
+- Mensajes nuevos en `config.yml` → `messages`: `update-available`, `given-folder`, `received-folder`, `unknown-folder`,
+  `unknown-world`, `dropped`, `store-blocked`, `pickup-blocked` (si conservas un config.yml antiguo se usan los textos por defecto del jar).
 
 ## Compilar y validar
 

@@ -53,10 +53,13 @@ public final class RadiantItems extends JavaPlugin {
     private LoopTask loop;
     private ChatInput chat;
     private PackService pack;
+    private dev.privalo.items.update.UpdateChecker updates;
     private BukkitTask watcher;
+    private final java.util.Map<java.util.UUID, Long> pickupNotices = new java.util.HashMap<>();
 
     @Override
     public void onEnable() {
+        checkVersion();
         saveDefaultConfig();
         copyDefaults();
         loadSecret();
@@ -70,6 +73,7 @@ public final class RadiantItems extends JavaPlugin {
         loop = new LoopTask(this);
         chat = new ChatInput(this);
         pack = new PackService(this);
+        updates = new dev.privalo.items.update.UpdateChecker(this);
 
         int count = items.loadAll();
         getLogger().info(count + " ítems cargados.");
@@ -80,6 +84,7 @@ public final class RadiantItems extends JavaPlugin {
         pm.registerEvents(new MenuListener(), this);
         pm.registerEvents(chat, this);
         pm.registerEvents(pack, this);
+        pm.registerEvents(updates, this);
 
         PluginCommand command = getCommand("radiantitems");
         if (command != null) {
@@ -97,6 +102,7 @@ public final class RadiantItems extends JavaPlugin {
         } else {
             getLogger().info("Modo sin texturas: resource-pack.enabled=false (sin servidor HTTP ni pack). Todo funciona con ítems vanilla.");
         }
+        updates.check();
         startWatcher();
     }
 
@@ -128,6 +134,7 @@ public final class RadiantItems extends JavaPlugin {
         pack.startHttp();
         pack.rebuildAndSendIfChanged();
         startWatcher();
+        updates.check();
         Bukkit.getOnlinePlayers().forEach(loop::updateOutdated);
         return count;
     }
@@ -199,6 +206,50 @@ public final class RadiantItems extends JavaPlugin {
         } catch (IOException ex) {
             return true;
         }
+    }
+
+    /**
+     * Compares the jar version with plugins/RadiantItems/.last-version, prints an update notice
+     * ("versión anterior -> versión nueva") when it changed, and only then rewrites the file.
+     */
+    private void checkVersion() {
+        String current = getPluginMeta().getVersion();
+        File file = new File(getDataFolder(), ".last-version");
+        try {
+            Files.createDirectories(getDataFolder().toPath());
+            if (!file.isFile()) {
+                getLogger().info("RadiantItems " + current + " instalado por primera vez.");
+            } else {
+                String previous = Files.readString(file.toPath(), StandardCharsets.UTF_8).trim();
+                if (previous.equals(current)) {
+                    return;
+                }
+                String direction = dev.privalo.items.update.Versions.compare(previous, current) > 0 ? "DOWNGRADE" : "ACTUALIZACIÓN";
+                getLogger().warning("============================================================");
+                getLogger().warning(" RadiantItems " + direction + " detectada: " + (previous.isEmpty() ? "desconocida" : previous) + " -> " + current);
+                getLogger().warning(" Revisa el README (novedades). Las claves nuevas de config.yml");
+                getLogger().warning(" usan su valor por defecto hasta que las añadas a tu config.yml.");
+                getLogger().warning("============================================================");
+            }
+            Files.writeString(file.toPath(), current, StandardCharsets.UTF_8);
+        } catch (IOException ex) {
+            getLogger().warning("No se pudo leer/escribir .last-version: " + ex.getMessage());
+        }
+    }
+
+    public void forgetPickupNotice(java.util.UUID player) {
+        pickupNotices.remove(player);
+    }
+
+    /** Throttles the "soulbound item" pickup notice (the pickup event fires every tick). */
+    public boolean pickupNotice(java.util.UUID player) {
+        long now = System.currentTimeMillis();
+        Long last = pickupNotices.get(player);
+        if (last != null && now - last < 3000) {
+            return false;
+        }
+        pickupNotices.put(player, now);
+        return true;
     }
 
     /** Per-server HMAC secret for item signatures (plugins/RadiantItems/.secret). */
@@ -292,5 +343,9 @@ public final class RadiantItems extends JavaPlugin {
 
     public PackService pack() {
         return pack;
+    }
+
+    public dev.privalo.items.update.UpdateChecker updates() {
+        return updates;
     }
 }
