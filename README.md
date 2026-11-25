@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="src/main/resources/branding/radiantitems.png" width="320" alt="Radiantitems logo">
+  <img src="radiantitems.png" width="320" alt="Radiantitems logo">
 </p>
 
 # RadiantItems
