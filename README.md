@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="src/main/resources/branding/radiantitems.png" width="320" alt="Radiantitems logo">
+</p>
+
 # RadiantItems
 
 Motor de **ítems personalizados ejecutables** para **Paper 1.21.4 → 26.x** (Java 21):
